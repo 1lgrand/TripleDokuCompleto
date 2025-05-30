@@ -22,4 +22,6 @@
 #include <stdlib.h>
 #include "griglia.h"
 
+
+
 int inizializzaGriglia(int grigliaSingola[GRIGLIA_LEN][GRIGLIA_LEN]);

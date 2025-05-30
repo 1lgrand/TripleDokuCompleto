@@ -34,7 +34,7 @@ typedef struct {
  *
  * DESCRIZIONE: Inizializza tutti gli elementi della griglia di gioco a zero.
  *
- * ARGOMENTI:
+ * PARAMETRI:
  * int grigliaSingola[N][N]: La singola griglia della 9x9 dell'intera griglia di gioco.
  *
  * RITORNO: Intero, esito dell'operazione

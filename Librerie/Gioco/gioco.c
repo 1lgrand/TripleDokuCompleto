@@ -18,3 +18,4 @@
 * [29/05/2025] - [DE MARZO] - [CREZIONE DEL FILE]
 * [GG/MM/AAAA] - [Autore] - [Descrizione della modifica e del suo impatto] - [Motivo della modifica]
 */
+
