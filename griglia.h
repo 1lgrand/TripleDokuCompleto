@@ -8,11 +8,6 @@
 *
 * Data Inizio: [29/05/2025]
 * Nome File: [griglia.h]
-*
-*
-* Lista delle modifiche effettuate:
-* [29/05/2025] - [DE MARZO] - [CRAEZIONE DEL FILE, AGGIUNTE STRUTTURE DATI, PROTOTIPI DI inizializzaGriglia,generaGrigliaCompleta,generaGrigliaGioco]
-* [GG/MM/AAAA] - [Autore] - [Descrizione della modifica e del suo impatto] - [Motivo della modifica]
 */
 
 #ifndef GRIGLIA_H

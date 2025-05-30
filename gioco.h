@@ -8,10 +8,6 @@
 *
 * Data Inizio: [29/05/2025]
 * Nome File: [gioco.h]
-*
-* Lista delle modifiche effettuate:
-* [29/05/2025] - [DE MARZO] - [CREAZIONE DEL FILE]
-* [30/05/2025] - [DE MARZO] - [Prototipi di funzione per la visualizzazione delle interfacce] 
 */
 
 #ifndef GIOCO_H
