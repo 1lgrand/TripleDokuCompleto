@@ -11,7 +11,6 @@
 * 
 *
 * Lista delle modifiche effettuate:
-* [29/05/2025] - [DE MARZO] - [CREZIONE DEL FILE]
-* [30/05/2025] - [ABBINANTE] - [ciao] - [malato]
+* [29/05/2025] - [DE MARZO] - [CREAZIONE DEL FILE]
 * [GG/MM/AAAA] - [Autore] - [Descrizione della modifica e del suo impatto] - [Motivo della modifica]
 */
