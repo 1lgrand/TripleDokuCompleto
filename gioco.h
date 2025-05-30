@@ -10,8 +10,8 @@
 * Nome File: [gioco.h]
 *
 * Lista delle modifiche effettuate:
-* [29/05/2025] - [DE MARZO] - [CREZIONE DEL FILE]
-* [GG/MM/AAAA] - [Autore] - [Descrizione della modifica e del suo impatto] - [Motivo della modifica]
+* [29/05/2025] - [DE MARZO] - [CREAZIONE DEL FILE]
+* [30/05/2025] - [DE MARZO] - [Prototipi di funzione per la visualizzazione delle interfacce] 
 */
 
 #ifndef GIOCO_H
@@ -23,6 +23,9 @@
 #define FILENAME ("salvataggi.dat") /* Nome del file binario dove sono conservati i salvataggi */
 #define MAX_SALVATAGGIO (64) /* Massimo di caratteri accettati per il nome del salvataggio*/
 
+// ================== STRUTTURE DATI ==================
+
+// Struttura che raccoglie tutti i dati relativi alla partita corrente
 typedef struct {
     int tentativiRimasti; // numero di tentativi rimasti al giocatore
     int difficolta;       // difficoltà selezionata dall'utente
@@ -30,6 +33,7 @@ typedef struct {
     Griglia grigliaCompleta; // soluzione del sudoku
 } Partita;
 
+// Struttura impiegata per salvare la partita all'interno del file binario
 typedef struct {
     char nome[MAX_SALVATAGGIO]; // nome del salvataggio (es. array di char per sequenza di caratteri)
     Partita datiPartita; // dato strutturato contenente le informazioni relative alla partita
@@ -74,6 +78,28 @@ int SalvaPartita(char *nomeFile, Partita *partita, char *nomeSalvataggio);
  ***********************************************************************/
 int CaricaPartita(char *nomeFile, char *nomeCaricamento, Partita *partita);
 
+
+
+
+
+/*
+=== INTERFACCE ===
+Le prossime funzioni riguardano tutte le operazioni di stampa per la visualizzazione delle varie interfacce
+*/
+
+
+/*
+ **********************************************************************
+ *
+ * FUNZIONE: int titolo
+ *
+ * DESCRIZIONE: Visualizza il titolo del progetto ed il numero gruppo
+ *
+ * RITORNO: esito (intero): 0 quando viene eseguita la stampa del titolo 
+ *
+ *
+ ***********************************************************************/
+int titolo();
 
 
 #endif

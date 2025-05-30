@@ -1,1 +1,26 @@
-.vscode
+# Ignora la cartella delle impostazioni di VS Code
+.vscode/
+
+# File oggetto e binari compilati
+*.o
+*.obj
+*.exe
+*.out
+*.dll
+*.so
+*.a
+*.lib
+
+# File temporanei e di backup
+*~
+*.swp
+*.tmp
+*.log
+
+# File di build
+/build/
+/bin/
+/dist/
+
+# File generati da make
+Makefile~

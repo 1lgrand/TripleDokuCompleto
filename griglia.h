@@ -11,7 +11,7 @@
 *
 *
 * Lista delle modifiche effettuate:
-* [29/05/2025] - [DE MARZO] - [CREZIONE DEL FILE, AGGIUNTE STRUTTURE DATI, PROTOTIPI DI inizializzaGriglia,generaGrigliaCompleta,generaGrigliaGioco]
+* [29/05/2025] - [DE MARZO] - [CRAEZIONE DEL FILE, AGGIUNTE STRUTTURE DATI, PROTOTIPI DI inizializzaGriglia,generaGrigliaCompleta,generaGrigliaGioco]
 * [GG/MM/AAAA] - [Autore] - [Descrizione della modifica e del suo impatto] - [Motivo della modifica]
 */
 
@@ -74,7 +74,8 @@ Griglia generaGrigliaCompleta();
  ***********************************************************************/
 Griglia generaGrigliaGioco(Griglia grigliaCompleta,int difficolta);
 
-
+//Funzione per la visualizzazione
+void visualizzaGriglia(int grigliaSingola[GRIGLIA_LEN][GRIGLIA_LEN]);
 
 
 
