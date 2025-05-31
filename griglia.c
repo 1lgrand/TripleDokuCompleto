@@ -16,6 +16,7 @@
 * Lista delle modifiche effettuate:
 * [29/05/2025] - [DE MARZO] - [CREAZIONE DEL FILE]
 * [30/05/2025] - [DELL'AQUILA] - [IMPLEMENTAZIONE DELLE FUNZIONI: inizializzaGriglia ] - [Implementazione della funzione di inizializzazione per le griglie]
+* [31/05/2025] - [DE MARZO] - [IMPLEMENTAZIONE sincronizzaQuadranti] - [Funzione per sincronizzare i quadranti condivisi delle griglie]
 * [GG/MM/AAAA] - [Autore] - [Descrizione della modifica e del suo impatto] - [Motivo della modifica]
 */
 
@@ -62,25 +63,7 @@ int inizializzaGriglia(int grigliaSingola[GRIGLIA_LEN][GRIGLIA_LEN]){
 }
 
 
-void visualizzaGriglia(int grigliaSingola[GRIGLIA_LEN][GRIGLIA_LEN]){
 
-    int i = 0;
-    int j = 0;
-
-    while (i<GRIGLIA_LEN)
-    {
-        j = 0;
-        while (j < GRIGLIA_LEN)
-        {
-            printf(" %d ", grigliaSingola[i][j]);
-            j = j + 1;
-        }
-        printf("\n");
-        i = i + 1;
-    }
-    
-
-}
 
 
 
@@ -131,4 +114,25 @@ int sincronizzaQuadranti(int sorgente[GRIGLIA_LEN][GRIGLIA_LEN], int destinazion
     }
 
     return 1;
+}
+
+// Visualizza una sola matrice della Griglia di gioco !
+void visualizzaGriglia(int grigliaSingola[GRIGLIA_LEN][GRIGLIA_LEN]){
+
+    int i = 0;
+    int j = 0;
+
+    while (i<GRIGLIA_LEN)
+    {
+        j = 0;
+        while (j < GRIGLIA_LEN)
+        {
+            printf(" %d ", grigliaSingola[i][j]);
+            j = j + 1;
+        }
+        printf("\n");
+        i = i + 1;
+    }
+    
+
 }
