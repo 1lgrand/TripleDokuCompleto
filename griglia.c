@@ -63,6 +63,7 @@ int inizializzaGriglia(int grigliaSingola[GRIGLIA_LEN][GRIGLIA_LEN]){
 
 
 void visualizzaGriglia(int grigliaSingola[GRIGLIA_LEN][GRIGLIA_LEN]){
+
     int i = 0;
     int j = 0;
 
@@ -78,153 +79,56 @@ void visualizzaGriglia(int grigliaSingola[GRIGLIA_LEN][GRIGLIA_LEN]){
         i = i + 1;
     }
     
+
 }
 
 
 
-/*
-Griglia generaGrigliaCompleta(){
-    Griglia grigliaCompleta;
-
-    int x = 0;
-    int y = 0;
-    int valido = 0;
-    int riempiti = 0;
-    int numeroCasuale = 0;
-
-    inizializzaGriglia(grigliaCompleta.grigliaA);
-    inizializzaGriglia(grigliaCompleta.grigliaB);
-    inizializzaGriglia(grigliaCompleta.grigliaC);
-
-    while (riempiti < n) {
-        x = rand() % GRIGLIA_LEN; 
-        y = rand() % GRIGLIA_LEN; 
-        numeroCasuale = rand() % GRIGLIA_LEN; 
-
-        valido = validaNumero(grigliaCompleta.ga, x, y, numeroCasuale);
-
-        if (valido == 1) {
-            grigliaCompleta.ga[y][x] = numeroCasuale;
-            riempiti++;
-        }
-    }
-
-    riempiti = 0;
-    while (riempiti < n) {
-        x = rand() % GRIGLIA_LEN; 
-        y = rand() % GRIGLIA_LEN;
-        numeroCasuale = rand() % GRIGLIA_LEN; 
-
-        valido = validaNumero(grigliaCompleta.ga, x, y, numeroCasuale);
-
-        if (valido == 1) {
-            grigliaCompleta.gb[y][x] = numeroCasuale;
-            riempiti++;
-        }
-    }
-
-    riempiti = 0;
-    while (riempiti < n) {
-        x = rand() % GRIGLIA_LEN; 
-        y = rand() % GRIGLIA_LEN; 
-        numeroCasuale = rand() % GRIGLIA_LEN; 
-        valido = validaNumero(grigliaCompleta.gc, x, y, numeroCasuale);
-
-        if (valido == 1) {
-            grigliaCompleta.gc[y][x] = numeroCasuale;
-            riempiti++;
-        }
-    }
-
-    sincronizzaQuadranti(grigliaCompleta);
-
-    //Risolvi(grigliaCompleta.ga);
-    //Risolvi(grigliaCompleta.gb);
-    //Risolvi(grigliaCompleta.gc);
-
-    return grigliaCompleta;
-}
-*/
-
 
 /*
-Griglia generaGrigliaGioco(Griglia grigliaCompleta, int difficolta){
-    Griglia grigliaDiGioco;
-    int celleDaLasciare = 0;
-    int celleDaRimuovere = 0;
-
-    grigliaDiGioco.ga = (int**)malloc(GRIGLIA_LEN * sizeof(int*));
-    grigliaDiGioco.gb = (int**)malloc(GRIGLIA_LEN * sizeof(int*));
-    grigliaDiGioco.gc = (int**)malloc(GRIGLIA_LEN * sizeof(int*));
-    
+ **********************************************************************
+ *
+ * FUNZIONE: void sincronizzaQuadranti(int sorgente[GRIGLIA_LEN][GRIGLIA_LEN], int destinazione[GRIGLIA_LEN][GRIGLIA_LEN])
+ *
+ * DESCRIZIONE: Sincronizza i quadranti condivisi tra due griglie del Triple Doku.
+ *              Copia gli ultimi 2 quadranti (6,7) della griglia sorgente 
+ *              nei primi 2 quadranti (0,1) della griglia destinazione.
+ *              Il quadrante 6 (basso-sinistra) viene copiato nel quadrante 0 (alto-sinistra)
+ *              e il quadrante 7 (basso-centro) viene copiato nel quadrante 1 (alto-centro).
+ *
+ * PARAMETRI:
+ * int sorgente[GRIGLIA_LEN][GRIGLIA_LEN]: La griglia sorgente da cui copiare i quadranti
+ * int destinazione[GRIGLIA_LEN][GRIGLIA_LEN]: La griglia destinazione dove copiare i quadranti
+ *
+ * RITORNO: esito, 1 quando la funzione termina con successo, intero
+ *
+ ***********************************************************************/
+int sincronizzaQuadranti(int sorgente[GRIGLIA_LEN][GRIGLIA_LEN], int destinazione[GRIGLIA_LEN][GRIGLIA_LEN]) {
+    // Variabili per gli indici dei cicli
     int i = 0;
-    while (i < GRIGLIA_LEN) {
-        grigliaDiGioco.ga[i] = (int*)malloc(GRIGLIA_LEN * sizeof(int));
-        grigliaDiGioco.gb[i] = (int*)malloc(GRIGLIA_LEN * sizeof(int));
-        grigliaDiGioco.gc[i] = (int*)malloc(GRIGLIA_LEN * sizeof(int));
-        i = i + 1;
-    }
-
-    if (difficolta == 1) {
-        celleDaLasciare = 30;
-    } else if (difficolta == 2) {
-        celleDaLasciare = 25;
-    } else if (difficolta == 3) {
-        celleDaLasciare = 20;
-    }
-    celleDaRimuovere = 81 - celleDaLasciare;
-
-    grigliaDiGioco = grigliaCompleta;
-
-    riempiti = 0;
-    while (riempiti < celleDaRimuovere) {
-        int x = rand() % GRIGLIA_LEN; 
-        int y = rand() % GRIGLIA_LEN; 
-
-        if (grigliaDiGioco.ga[y][x] != 0) {
-            grigliaDiGioco.ga[y][x] = 0;
-            riempiti++;
+    int j = 0;
+    
+    // Copia del quadrante 6 (basso-sx) -> quadrante 0 (alto-sx)
+    i = 6; 
+    while (i <= 8) { // Cicla nelle righe del quadrante sorgente
+        j = 0; // Inizializza l'indice della colonna
+        while (j <= 2) { // Cicla nelle colonne del quadrante sorgente
+            destinazione[i - 6][j] = sorgente[i][j]; // Copia l'elemento dalla sorgente alla destinazione
+            j = j + 1; // Incrementa l'indice della colonna
         }
+        i = i + 1; // Incrementa l'indice della riga
     }
-
-    riempiti = 0;
-    while (riempiti < celleDaRimuovere) {
-        int x = rand() % GRIGLIA_LEN;
-        int y = rand() % GRIGLIA_LEN;
-
-        if (grigliaDiGioco.gb[y][x] != 0) {
-            grigliaDiGioco.gb[y][x] = 0;
-            riempiti++;
+    
+    // Copia quadrante 7 (basso-centro) -> quadrante 1 (alto-centro)
+    i = 6;
+    while (i <= 8) { // Cicla nelle righe del quadrante sorgente
+        j = 3; // Inizializza l'indice della colonna
+        while (j <= 5) { // Cicla nelle colonne del quadrante sorgente
+            destinazione[i - 6][j] = sorgente[i][j]; // Copia l'elemento dalla sorgente alla destinazione
+            j = j + 1; // Incrementa l'indice della colonna
         }
+        i = i + 1; // Incrementa l'indice della riga
     }
 
-    riempiti = 0;
-    while (riempiti < celleDaRimuovere) {
-        int x = rand() % GRIGLIA_LEN; 
-        int y = rand() % GRIGLIA_LEN; 
-
-        if (grigliaDiGioco.gc[y][x] != 0) {
-            grigliaDiGioco.gc[y][x] = 0;
-            riempiti++;
-        }
-    }
-
-    sincronizzaQuadranti(grigliaDiGioco);
-
-    return grigliaDiGioco;
-}*/
-
-
-/*void sincronizzaQuadranti(Griglia griglia){
-    int x = 3;
-    int y = 6;
-
-    while(y < GRIGLIA_LEN) {
-        while (x < GRIGLIA_LEN) {
-            griglia.gb[y - 5][x - 2] = griglia.ga[y][x];
-            griglia.gc[y - 5][x - 2] = griglia.gb[y][x];
-            x = x + 1;
-        }
-        y = y + 1;
-    }
-}*/
+    return 1;
+}

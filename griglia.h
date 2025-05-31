@@ -69,12 +69,28 @@ Griglia generaGrigliaCompleta();
  ***********************************************************************/
 Griglia generaGrigliaGioco(Griglia grigliaCompleta,int difficolta);
 
+/*
+ **********************************************************************
+ *
+ * FUNZIONE: void sincronizzaQuadranti(int sorgente[GRIGLIA_LEN][GRIGLIA_LEN], int destinazione[GRIGLIA_LEN][GRIGLIA_LEN])
+ *
+ * DESCRIZIONE: Sincronizza i quadranti condivisi tra due griglie del Triple Doku.
+ *              Copia gli ultimi 2 quadranti (6,7) della griglia sorgente 
+ *              nei primi 2 quadranti (0,1) della griglia destinazione.
+ *              Il quadrante 6 (basso-sinistra) viene copiato nel quadrante 0 (alto-sinistra)
+ *              e il quadrante 7 (basso-centro) viene copiato nel quadrante 1 (alto-centro).
+ *
+ * PARAMETRI:
+ * int sorgente[GRIGLIA_LEN][GRIGLIA_LEN]: La griglia sorgente da cui copiare i quadranti
+ * int destinazione[GRIGLIA_LEN][GRIGLIA_LEN]: La griglia destinazione dove copiare i quadranti
+ *
+ * RITORNO: esito, 1 quando la funzione termina con successo, intero
+ *
+ ***********************************************************************/
+int sincronizzaQuadranti(int sorgente[GRIGLIA_LEN][GRIGLIA_LEN], int destinazione[GRIGLIA_LEN][GRIGLIA_LEN]);
+
 //Funzione per la visualizzazione
 void visualizzaGriglia(int grigliaSingola[GRIGLIA_LEN][GRIGLIA_LEN]);
-
-
-
-
 
 
 
