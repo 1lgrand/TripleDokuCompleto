@@ -1,5 +1,6 @@
 # Ignora la cartella delle impostazioni di VS Code
 .vscode/
+.docs
 
 # File oggetto e binari compilati
 *.o
