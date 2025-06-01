@@ -18,7 +18,7 @@
 * Lista delle modifiche effettuate:
 * [29/05/2025] - [DE MARZO] - [CREAZIONE DEL FILE]
 * [30/05/2025] - [DE MARZO] - [Scrittura della funzione main e test della funzione di inizializzazione]
-* [GG/MM/AAAA] - [Autore] - [Descrizione della modifica e del suo impatto] - [Motivo della modifica]
+* [01/06/2025] - [DE MARZO] - [Test menu di avvio] 
 */
 
 #include "validazione.h"
@@ -27,42 +27,66 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+/*
+* DESCRIZIONE: Procedura che inizializza a 0 tutte le griglie destinate all'u
+*/
 
 int main(){
 
     Griglia grigliaDiGioco;
     Griglia grigliaCompleta;
     Partita partita;
-    int difficolta = 0; // Inizializzazione di difficolta, 1 = FACILE, 2 = MEDIO, 3 = DIFFICILE
     int tentativi = TENTATIVI; //Inizializzazione con il numero di tentativi validi
 
-    titolo(); //Stampa il titolo del gioco e il gruppo 
+    int difficolta = 0; // Inizializzazione di difficolta, 1 = FACILE, 2 = MEDIO, 3 = DIFFICILE
+    int menuIniziale = 0; //Inizializza la variabile che si occupa di gestire la scelta del menu di avvio, a 0
 
     // Inizializzazione di tutte le sottogriglie della griglia "soluzione"
     inizializzaGriglia(grigliaCompleta.grigliaA);
     inizializzaGriglia(grigliaCompleta.grigliaB);
     inizializzaGriglia(grigliaCompleta.grigliaC);
 
+
     // Inizializzazione di tutte le sottogriglie della griglia giocabile dall'utente
     inizializzaGriglia(grigliaDiGioco.grigliaA);
     inizializzaGriglia(grigliaDiGioco.grigliaB);
     inizializzaGriglia(grigliaDiGioco.grigliaC);
 
+
+
+    //TODO: Funzione (validazione.c) che validi la scelta del menu iniziale e ritorni qualcosa per gestire il menu
+    titolo(); //Stampa il titolo del gioco e il gruppo 
+    menuAvvio();
+    scanf("%d",&menuIniziale);
+
+    while (menuIniziale < 0 || menuIniziale > 3)
+    {
+        system("cls");
+        titolo(); //Stampa il titolo del gioco e il gruppo 
+        menuAvvio();
+        scanf("%d",&menuIniziale);
+    }
+
+    system("cls");
+    titolo();
+
+    /* TODO: TRASFORMARE IN FUNZIONE TUTTA LA SELEZIONE DELLA DIFFICOLTA' E RITORNARE UN INTERO COMPRESO TRA 1 E 3*/
     //Selezione della difficoltà
-    printf("\n\n> Seleziona la difficolta del gioco: \n[1. FACILE]\n[2. MEDIO]\n[3. DIFFICILE]\n\n");
+    printf("\n\n> Seleziona la difficolta del gioco: \n1. FACILE\n2. MEDIO\n3. DIFFICILE\n\n");
     scanf("%d",&difficolta);
 
     //Controllo sulla correttezza della difficoltà
     while (difficolta > 3 || difficolta < 1)
     {
         system("cls");
-        printf("\n\n> Seleziona la difficolta del gioco: \n[1. FACILE]\n[2. MEDIO]\n[3. DIFFICILE]\n");
+        titolo();
+        printf("\n\n> Seleziona la difficolta del gioco: \n1. FACILE\n2. MEDIO\n3. DIFFICILE\n\n");
         scanf("%d",&difficolta);
     }
     
 
-
-    //Visualizzazione 
+    //Visualizzazione delle griglie
+    // TODO: Modificare e mettere in una funzione in gioco.h per la visualizzazione corretta 
     printf("\nGriglia A:\n");
     visualizzaGriglia(grigliaCompleta.grigliaA);
 
@@ -79,3 +103,5 @@ int main(){
     system("pause");
     return 0;
 }
+
+

@@ -97,5 +97,18 @@ Le prossime funzioni riguardano tutte le operazioni di stampa per la visualizzaz
  ***********************************************************************/
 int titolo();
 
+/*
+ **********************************************************************
+ *
+ * FUNZIONE: int menuAvvio
+ *
+ * DESCRIZIONE: Visualizza il menu di avvio con le opzioni per creare una nuova partita, caricarla da file oppure uscire dal gioco
+ *
+ * RITORNO: esito (intero): 0 quando viene eseguita la stampa del menu 
+ *
+ *
+ ***********************************************************************/
+int menuAvvio();
+
 
 #endif
