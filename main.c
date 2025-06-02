@@ -70,7 +70,9 @@ int main(){
     system("cls");
     titolo();
 
-    /* TODO: TRASFORMARE IN FUNZIONE TUTTA LA SELEZIONE DELLA DIFFICOLTA' E RITORNARE UN INTERO COMPRESO TRA 1 E 3*/
+    /* TODO: TRASFORMARE IN FUNZIONE TUTTA LA SELEZIONE DELLA DIFFICOLTA' E RITORNARE UN INTERO COMPRESO TRA 1 E 3
+             Scrivendo una funzone in validazione che gestisca il tutto
+    */
     //Selezione della difficoltà
     printf("\n\n> Seleziona la difficolta del gioco: \n1. FACILE\n2. MEDIO\n3. DIFFICILE\n\n");
     scanf("%d",&difficolta);
@@ -83,6 +85,9 @@ int main(){
         printf("\n\n> Seleziona la difficolta del gioco: \n1. FACILE\n2. MEDIO\n3. DIFFICILE\n\n");
         scanf("%d",&difficolta);
     }
+    
+
+
     
 
     //Visualizzazione delle griglie

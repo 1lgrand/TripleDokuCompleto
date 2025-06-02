@@ -22,7 +22,7 @@ typedef struct {
     int grigliaC[GRIGLIA_LEN][GRIGLIA_LEN];
 } Griglia;
 
-/*
+/*  
  **********************************************************************
  *
  * FUNZIONE: void inizializzaGriglia(int grigliaSingola[N][N])
