@@ -156,7 +156,32 @@ void visualizzaGriglia(int grigliaSingola[GRIGLIA_LEN][GRIGLIA_LEN]){
  ***********************************************************************/
 
 int risolviSudoku(int griglia[GRIGLIA_LEN][GRIGLIA_LEN]){
+   int riga; // variabile 1 per indicare la cella
+   int col; // variabile 2 per indicare la cella
+   int num; // variabile per il numero da testare
+   int soluzioneValida = 0; // flag per indicare se è stata trovata o no una soluzione
+
+   riga = 0;
+   while(riga < GRIGLIA_LEN && !soluzioneValida)
+   {
+    col = 0;
+    while (col < GRIGLIA_LEN && !soluzioneValida)
+    {
+        if (griglia[riga][col] == 0) // se la cella è vuota 
+        {
+            // prova tutti i numeri da 1 a 9
+            num = 1;
+            while (num <= 9 && !soluzioneValida)
+            
+        }
+        
+    }
     
+
+
+    riga = riga + 1;
+   }
+
 }
 
 /*
