@@ -24,7 +24,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <time.h>
 
 #include "griglia.h"
 
@@ -138,3 +138,24 @@ void visualizzaGriglia(int grigliaSingola[GRIGLIA_LEN][GRIGLIA_LEN]){
     
 
 }
+
+/*
+ **********************************************************************
+ *
+ * FUNZIONE: int risolviSudoku(int griglia[GRIGLIA_LEN][GRIGLIA_LEN])
+ * 
+ * DESCRIZIONE: Genera una singola griglia completa
+ *
+ * PARAMETRI:
+ * int griglia[GRIGLIA_LEN][GRIGLIA_LEN] : griglia di grandezza 9x9
+ *
+ * RITORNO: soluzioneValida, Risultato per la cella specifica nel sudoku; 1, se la cella è gia piena ovverola griglia è completa
+ *
+ ***********************************************************************/
+
+int risolviSudoku(int griglia[GRIGLIA_LEN][GRIGLIA_LEN]){
+    
+}
+
+
+
