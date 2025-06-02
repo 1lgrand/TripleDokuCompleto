@@ -17,9 +17,7 @@
 * [29/05/2025] - [DE MARZO] - [CREAZIONE DEL FILE]
 * [30/05/2025] - [DELL'AQUILA] - [IMPLEMENTAZIONE DELLE FUNZIONI: inizializzaGriglia ] - [Implementazione della funzione di inizializzazione per le griglie]
 * [31/05/2025] - [DE MARZO] - [IMPLEMENTAZIONE sincronizzaQuadranti] - [Funzione per sincronizzare i quadranti condivisi delle griglie]
-* [02/06/2025] - [DE MARZO] - [IMPLEMENTAZIONE generaGrigliaCompleta e funzioni annesse]
-* [02/06/2025] - [ABBINANTE] - [IMPLEMENTAZIONE e TESTING generaGrigliaCompleta]
-* [GG/MM/AAAA] - [Autore] - [Descrizione della modifica e del suo impatto]
+* [GG/MM/AAAA] - [Autore] - [Descrizione della modifica e del suo impatto] - [Motivo della modifica]
 */
 
 #include <stdio.h>
@@ -156,6 +154,24 @@ void visualizzaGriglia(int grigliaSingola[GRIGLIA_LEN][GRIGLIA_LEN]){
 int risolviSudoku(int griglia[GRIGLIA_LEN][GRIGLIA_LEN]){
     
 }
+
+/*
+ **********************************************************************
+ *
+ * FUNZIONE: int shuffle(int array[], int size)
+ * 
+ * DESCRIZIONE: Mescola l'array
+ *
+ * PARAMETRI:
+ * int array[] : array da mescolare, int size : la grandezza dell'array
+ *
+ * RITORNO: esito, 1
+ *
+ ***********************************************************************/
+// Funzione per mescolare un array
+int shuffle(int array[], int size) {
+    
+    }
 
 
 
