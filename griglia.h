@@ -94,6 +94,7 @@ void visualizzaGriglia(int grigliaSingola[GRIGLIA_LEN][GRIGLIA_LEN]);
 
 int risolviSudoku(int griglia[GRIGLIA_LEN][GRIGLIA_LEN]);
 
+//Funzione per la mescolazione dell'array
 int shuffle(int array[], int size);
 
 #endif

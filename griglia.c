@@ -18,7 +18,8 @@
 * [30/05/2025] - [DELL'AQUILA] - [IMPLEMENTAZIONE DELLE FUNZIONI: inizializzaGriglia ] - [Implementazione della funzione di inizializzazione per le griglie]
 * [31/05/2025] - [DE MARZO] - [IMPLEMENTAZIONE sincronizzaQuadranti] - [Funzione per sincronizzare i quadranti condivisi delle griglie]
 * [02/06/2025] - [DE MARZO] - [IMPLEMENTAZIONE generaGrigliaCompleta e funzioni annesse]
-* [02/06/2025] - [ABBINANTE] - [IMPLEMENTAZIONE e TESTING generaGrigliaCompleta]
+* [02/06/2025] - [ABBINANTE] - [IMPLEMENTAZIONE generaGrigliaCompleta]
+* [02/06/2025] - [ABBINANTE] - [IMPLEMENTAZIONE shuffle]
 */
 
 #include <stdio.h>
@@ -87,6 +88,8 @@ int inizializzaGriglia(int grigliaSingola[GRIGLIA_LEN][GRIGLIA_LEN]){
  * RITORNO: esito, 1 quando la funzione termina con successo, intero
  *
  ***********************************************************************/
+
+
 int sincronizzaQuadranti(int sorgente[GRIGLIA_LEN][GRIGLIA_LEN], int destinazione[GRIGLIA_LEN][GRIGLIA_LEN]) {
     // Variabili per gli indici dei cicli
     int i = 0;
@@ -169,10 +172,15 @@ int risolviSudoku(int griglia[GRIGLIA_LEN][GRIGLIA_LEN]){
  * RITORNO: esito, 1
  *
  ***********************************************************************/
+
 // Funzione per mescolare un array
-int shuffle(int array[], int size) {
-    
+void shuffle(int array[], int size) {
+    int i = size - 1;
+    while (i > 0) {
+        int j = rand() % (i + 1);
+        int temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+        i = i - 1; 
     }
-
-
-
+}
