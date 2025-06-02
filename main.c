@@ -27,9 +27,6 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-/*
-* DESCRIZIONE: Procedura che inizializza a 0 tutte le griglie destinate all'u
-*/
 
 int main(){
 

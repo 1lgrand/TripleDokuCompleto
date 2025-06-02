@@ -89,6 +89,9 @@ Griglia generaGrigliaGioco(Griglia grigliaCompleta,int difficolta);
  ***********************************************************************/
 int sincronizzaQuadranti(int sorgente[GRIGLIA_LEN][GRIGLIA_LEN], int destinazione[GRIGLIA_LEN][GRIGLIA_LEN]);
 
+
+
+
 //Funzione per la visualizzazione
 void visualizzaGriglia(int grigliaSingola[GRIGLIA_LEN][GRIGLIA_LEN]);
 
