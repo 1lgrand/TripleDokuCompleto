@@ -17,9 +17,8 @@
 * [29/05/2025] - [DE MARZO] - [CREAZIONE DEL FILE]
 * [30/05/2025] - [DELL'AQUILA] - [IMPLEMENTAZIONE DELLE FUNZIONI: inizializzaGriglia ] - [Implementazione della funzione di inizializzazione per le griglie]
 * [31/05/2025] - [DE MARZO] - [IMPLEMENTAZIONE sincronizzaQuadranti] - [Funzione per sincronizzare i quadranti condivisi delle griglie]
-* [02/06/2025] - [DE MARZO] - [IMPLEMENTAZIONE generaGrigliaCompleta e funzioni annesse]
-* [02/06/2025] - [ABBINANTE] - [IMPLEMENTAZIONE generaGrigliaCompleta]
-* [02/06/2025] - [ABBINANTE] - [IMPLEMENTAZIONE shuffle]
+* [02/06/2025] - [DE MARZO] - [IMPLEMENTAZIONE funzioni utili a generaGrigliaCompleta] - [Implementazione delle funzioni che compongono la struttura di generaGrigliaCompleta]
+* [02/06/2025] - [ABBINANTE] - [IMPLEMENTAZIONE generaGrigliaCompleta, shuffle]
 */
 
 #include <stdio.h>
@@ -188,25 +187,25 @@ int risolviSudoku(int griglia[GRIGLIA_LEN][GRIGLIA_LEN]){
 /*
  **********************************************************************
  *
- * FUNZIONE: int shuffle(int array[], int size)
+ * FUNZIONE: int shuffle(int array[], int lunghezza)
  * 
  * DESCRIZIONE: Mescola l'array
  *
  * PARAMETRI:
- * int array[] : array da mescolare, int size : la grandezza dell'array
+ * int array[] : array da mescolare, int lunghezza : la lunghezza dell'array
  *
- * RITORNO: esito, 1
+ * RITORNO: esito, 1 se mescolato correttamente
  *
  ***********************************************************************/
 
 // Funzione per mescolare un array
-int shuffle(int array[], int size) {
-    int i = size - 1;
+int shuffle(int numeri[], int lunghezza) {
+    int i = lunghezza - 1;
     while (i > 0) {
-        int j = rand() % (i + 1);
-        int temp = array[i];
-        array[i] = array[j];
-        array[j] = temp;
+        int j = rand() % (i + 1); // Numero casuale da 0 a i + 1
+        int temp = numeri[i];
+        numeri[i] = numeri[j];
+        numeri[j] = temp;
         i = i - 1; 
     }
 }
