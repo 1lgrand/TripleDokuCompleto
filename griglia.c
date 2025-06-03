@@ -167,11 +167,12 @@ int risolviSudoku(int griglia[GRIGLIA_LEN][GRIGLIA_LEN]){
     col = 0;
     while (col < GRIGLIA_LEN && !soluzioneValida)
     {
-        if (griglia[riga][col] == 0) // se la cella è vuota 
-        {
+        if (griglia[riga][col] == 0){
             // prova tutti i numeri da 1 a 9
             num = 1;
-            while (num <= 9 && !soluzioneValida)
+            while (num <= 9 && !soluzioneValida){
+
+            }
             
         }
         
@@ -199,7 +200,7 @@ int risolviSudoku(int griglia[GRIGLIA_LEN][GRIGLIA_LEN]){
  ***********************************************************************/
 
 // Funzione per mescolare un array
-void shuffle(int array[], int size) {
+int shuffle(int array[], int size) {
     int i = size - 1;
     while (i > 0) {
         int j = rand() % (i + 1);
