@@ -18,26 +18,84 @@
 #include "griglia.h"
 #include <stdio.h>
 
+
+
 /*
  **********************************************************************
  *
- * FUNZIONE: int verificaValiditaNumeroSudoku(int griglia[GRIGLIA_LEN][GRIGLIA_LEN], int riga, int col, int num)
+ * FUNZIONE: int checkRiga(int griglia[GRIGLIA_LEN][GRIGLIA_LEN], int riga, int num)
  *
- * DESCRIZIONE: Verifica se un numero può essere inserito in una posizione 
- *              specifica della griglia rispettando le regole del Sudoku.
- *              Controlla che il numero non sia già presente nella stessa
- *              riga, colonna o quadrante 3x3.
+ * DESCRIZIONE: Verifica se un numero è già presente nella riga specificata
  *
  * PARAMETRI:
- * int griglia[GRIGLIA_LEN][GRIGLIA_LEN]: La griglia di gioco 9x9
- * int riga: L'indice della riga dove inserire il numero (0-8)
- * int col: L'indice della colonna dove inserire il numero (0-8)  
- * int num: Il numero da verificare (1-9)
+ * int griglia[GRIGLIA_LEN][GRIGLIA_LEN]: La griglia da controllare
+ * int riga: L'indice della riga da verificare
+ * int num: Il numero da cercare nella riga
  *
- * RITORNO: Intero, 1 se il numero è valido nella posizione, 0 altrimenti
+ * RITORNO: int, 1 se il numero NON è presente (valido), 0 se è già presente
  *
  ***********************************************************************/
-int verificaValiditaGenerazione(int griglia[GRIGLIA_LEN][GRIGLIA_LEN], int riga, int col, int num);
+int checkRiga(int griglia[GRIGLIA_LEN][GRIGLIA_LEN], int riga, int num);
+
+/*
+ **********************************************************************
+ *
+ * FUNZIONE: int checkColonna(int griglia[GRIGLIA_LEN][GRIGLIA_LEN], int col, int num)
+ *
+ * DESCRIZIONE: Verifica se un numero è già presente nella colonna specificata
+ *
+ * PARAMETRI:
+ * int griglia[GRIGLIA_LEN][GRIGLIA_LEN]: La griglia da controllare
+ * int col: L'indice della colonna da verificare
+ * int num: Il numero da cercare nella colonna
+ *
+ * RITORNO: int, 1 se il numero NON è presente (valido), 0 se è già presente
+ *
+ ***********************************************************************/
+int checkColonna(int griglia[GRIGLIA_LEN][GRIGLIA_LEN], int col, int num);
+
+/*
+ **********************************************************************
+ *
+ * FUNZIONE: int checkQuadrante(int griglia[GRIGLIA_LEN][GRIGLIA_LEN], int rigaInizio, int colInizio, int num)
+ *
+ * DESCRIZIONE: Verifica se un numero è già presente nel quadrante 3x3 specificato
+ *
+ * PARAMETRI:
+ * int griglia[GRIGLIA_LEN][GRIGLIA_LEN]: La griglia da controllare
+ * int rigaInizio: Riga di inizio del quadrante (0, 3, o 6)
+ * int colInizio: Colonna di inizio del quadrante (0, 3, o 6)
+ * int num: Il numero da cercare nel quadrante
+ *
+ * RITORNO: int, 1 se il numero NON è presente (valido), 0 se è già presente
+ *
+ ***********************************************************************/
+int checkQuadrante(int griglia[GRIGLIA_LEN][GRIGLIA_LEN], int rigaInizio, int colInizio, int num);
+
+/*
+ **********************************************************************
+ *
+ * FUNZIONE: int checkPosizionamento(int griglia[GRIGLIA_LEN][GRIGLIA_LEN], int riga, int col, int num)
+ *
+ * DESCRIZIONE: Verifica se è possibile inserire un numero in una posizione specifica
+ *              controllando riga, colonna e quadrante
+ *
+ * PARAMETRI:
+ * int griglia[GRIGLIA_LEN][GRIGLIA_LEN]: La griglia da controllare
+ * int riga: L'indice della riga dove inserire
+ * int col: L'indice della colonna dove inserire
+ * int num: Il numero da inserire
+ *
+ * RITORNO: int, 1 se il posizionamento è valido, 0 altrimenti
+ *
+ ***********************************************************************/
+int checkPosizionamento(int griglia[GRIGLIA_LEN][GRIGLIA_LEN], int riga, int col, int num);
+
+
+
+
+
+
 
 /*
  **********************************************************************

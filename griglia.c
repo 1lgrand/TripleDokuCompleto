@@ -13,10 +13,10 @@
 * - [inizializzaGriglia]: [Inizializza a 0 tutti i valori delle griglie del gioco]
 * - [sincronizzaQuadrante]: [Sincronizza un singolo quadrante tra due griglie]
 * - [visualizzaGriglia]: [Visualizza una singola griglia 9x9]
-* - [eValidoNellaRiga]: [Verifica se un numero è già presente nella riga specificata]
-* - [eValidoNellaColonna]: [Verifica se un numero è già presente nella colonna specificata]
-* - [eValidoNelQuadrante]: [Verifica se un numero è già presente nel quadrante 3x3 specificato]
-* - [ePosizionamentoValido]: [Verifica se è possibile inserire un numero in una posizione specifica]
+* - [checkRiga]: [Verifica se un numero è già presente nella riga specificata]
+* - [checkColonna]: [Verifica se un numero è già presente nella colonna specificata]
+* - [checkQuadrante]: [Verifica se un numero è già presente nel quadrante 3x3 specificato]
+* - [checkPosizionamento]: [Verifica se è possibile inserire un numero in una posizione specifica]
 * - [generaGrigliaCompleta]: [Genera una griglia Sudoku completa utilizzando backtracking]
 * - [shuffle]: [Mescola gli elementi di un array]
 * - [generaGrigliaVincolata]: [Genera una griglia rispettando i quadranti già popolati]
@@ -35,6 +35,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include "griglia.h"
+#include "validazione.h"
 
 int inizializzaGriglia(int grigliaSingola[GRIGLIA_LEN][GRIGLIA_LEN]) {
     int y = 0;
@@ -52,11 +53,12 @@ int inizializzaGriglia(int grigliaSingola[GRIGLIA_LEN][GRIGLIA_LEN]) {
 }
 
 int sincronizzaQuadrante(int sorgente[GRIGLIA_LEN][GRIGLIA_LEN], int destinazione[GRIGLIA_LEN][GRIGLIA_LEN], int qOrigine, int qDestinazione) {
+    
     int rigaInizioOrigine = (qOrigine / 3) * 3;
-    int colonnaInizioOrigine = (qOrigine % 3) * 3;
+    int colonnaInizioOrigine = (calcolaModulo(qOrigine,3)) * 3;
 
     int rigaInizioDest = (qDestinazione / 3) * 3;
-    int colonnaInizioDest = (qDestinazione % 3) * 3;
+    int colonnaInizioDest = (calcolaModulo(qDestinazione,3)) * 3;
 
     int y = 0;
     int x = 0;
@@ -118,7 +120,7 @@ int risolviSudoku(int griglia[GRIGLIA_LEN][GRIGLIA_LEN]) {
         i = 0;
         while (i < 9 && esito == 0) {
             num = numeri[i];
-            if (ePosizionamentoValido(griglia, riga, col, num) == 1) {
+            if (checkPosizionamento(griglia, riga, col, num) == 1) {
                 griglia[riga][col] = num;
                 if (risolviSudoku(griglia) == 1) {
                     esito = 1;
@@ -144,59 +146,6 @@ int shuffle(int array[], int lunghezza) {
         array[i] = array[j];
         array[j] = temp;
         i = i - 1;
-    }
-    return esito;
-}
-
-int eValidoNellaRiga(int griglia[GRIGLIA_LEN][GRIGLIA_LEN], int riga, int num) {
-    int col = 0;
-    int esito = 1;
-    while (col < GRIGLIA_LEN && esito == 1) {
-        if (griglia[riga][col] == num) {
-            esito = 0;
-        }
-        col = col + 1;
-    }
-    return esito;
-}
-
-int eValidoNellaColonna(int griglia[GRIGLIA_LEN][GRIGLIA_LEN], int col, int num) {
-    int riga = 0;
-    int esito = 1;
-    while (riga < GRIGLIA_LEN && esito == 1) {
-        if (griglia[riga][col] == num) {
-            esito = 0;
-        }
-        riga = riga + 1;
-    }
-    return esito;
-}
-
-int eValidoNelQuadrante(int griglia[GRIGLIA_LEN][GRIGLIA_LEN], int rigaInizio, int colInizio, int num) {
-    int i = rigaInizio;
-    int j = 0;
-    int esito = 1;
-    while (i < rigaInizio + 3 && esito == 1) {
-        j = colInizio;
-        while (j < colInizio + 3 && esito == 1) {
-            if (griglia[i][j] == num) {
-                esito = 0;
-            }
-            j = j + 1;
-        }
-        i = i + 1;
-    }
-    return esito;
-}
-
-int ePosizionamentoValido(int griglia[GRIGLIA_LEN][GRIGLIA_LEN], int riga, int col, int num) {
-    int rigaQuadrante = (riga / 3) * 3;
-    int colQuadrante = (col / 3) * 3;
-    int esito = 0;
-    if (eValidoNellaRiga(griglia, riga, num) == 1 &&
-        eValidoNellaColonna(griglia, col, num) == 1 &&
-        eValidoNelQuadrante(griglia, rigaQuadrante, colQuadrante, num) == 1) {
-        esito = 1;
     }
     return esito;
 }
@@ -231,7 +180,7 @@ int generaGrigliaCompleta(int griglia[GRIGLIA_LEN][GRIGLIA_LEN]) {
         i = 0;
         while (i < 9 && esito == 0) {
             num = numeri[i];
-            if (ePosizionamentoValido(griglia, riga, col, num) == 1) {
+            if (checkPosizionamento(griglia, riga, col, num) == 1) {
                 griglia[riga][col] = num;
                 if (generaGrigliaCompleta(griglia) == 1) {
                     esito = 1;
@@ -278,7 +227,7 @@ int generaGrigliaVincolata(int griglia[GRIGLIA_LEN][GRIGLIA_LEN], int quadrantiB
         i = 0;
         while (i < 9 && esito == 0) {
             num = numeri[i];
-            if (ePosizionamentoValido(griglia, riga, col, num) == 1) {
+            if (checkPosizionamento(griglia, riga, col, num) == 1) {
                 griglia[riga][col] = num;
                 if (generaGrigliaVincolata(griglia, quadrantiBloccati) == 1) {
                     esito = 1;
