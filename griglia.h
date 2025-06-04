@@ -13,88 +13,222 @@
 #ifndef GRIGLIA_H
 #define GRIGLIA_H
 
-#define GRIGLIA_LEN (9)
+#include <stdio.h>
+#include <stdlib.h>
 
-//Strutture dati
+#define GRIGLIA_LEN (9) /* Dimensione fissa della griglia Sudoku 9x9 */
+
+// ================== STRUTTURE DATI ==================
+
 typedef struct {
     int grigliaA[GRIGLIA_LEN][GRIGLIA_LEN];
     int grigliaB[GRIGLIA_LEN][GRIGLIA_LEN];
     int grigliaC[GRIGLIA_LEN][GRIGLIA_LEN];
 } Griglia;
 
-/*  
+// ================== PROTOTIPI FUNZIONI ==================
+
+/*
  **********************************************************************
  *
- * FUNZIONE: void inizializzaGriglia(int grigliaSingola[N][N])
+ * FUNZIONE: int inizializzaGriglia(int grigliaSingola[GRIGLIA_LEN][GRIGLIA_LEN])
  *
- * DESCRIZIONE: Inizializza tutti gli elementi della griglia di gioco a zero.
+ * DESCRIZIONE: Inizializza tutti gli elementi della griglia a zero.
  *
  * PARAMETRI:
- * int grigliaSingola[N][N]: La singola griglia della 9x9 dell'intera griglia di gioco.
+ * int grigliaSingola[GRIGLIA_LEN][GRIGLIA_LEN]: La singola griglia da inizializzare
  *
- * RITORNO: Intero, esito dell'operazione
-
+ * RITORNO: Intero, esito dell'operazione (sempre 0 per successo)
  *
  ***********************************************************************/
 int inizializzaGriglia(int grigliaSingola[GRIGLIA_LEN][GRIGLIA_LEN]);
 
-
 /*
  **********************************************************************
  *
- * FUNZIONE: Griglia generaGrigliaCompleta()
+ * FUNZIONE: int sincronizzaQuadrante(int sorgente[GRIGLIA_LEN][GRIGLIA_LEN], int destinazione[GRIGLIA_LEN][GRIGLIA_LEN], int qOrigine, int qDestinazione)
  *
- * DESCRIZIONE: Genera la soluzione della griglia di gioco,
- * che è composta da 3 griglie, le quali sono sincronizzate tra loro
- * 
- * RITORNO: Griglia grigliaCompleta: Tutte le 3 griglie complete e sincronizzate, risolte.
- *
- ***********************************************************************/
-Griglia generaGrigliaCompleta();
-
-
-/*
- **********************************************************************
- *
- * FUNZIONE: Griglia generaGrigliaDiGioco()
- *
- * DESCRIZIONE: Genera la griglia di gioco che il giocatore andrà effettivamente a visualizzare
- * in base alla difficoltà ricevuta vengono eliminate un numero N di celle.
- * - FACILE: 30 Celle complete ( per griglia )
- * - MEDIO: 25 Celle complete ( per griglia )
- * - DIFFICILE: 20 Celle complete ( per griglia )
- * 
- * RITORNO: Griglia grigliaDiGioco: Griglia parzialmente completa da mostrare all'utente.
- *
- ***********************************************************************/
-Griglia generaGrigliaGioco(Griglia grigliaCompleta,int difficolta);
-
-/*
- **********************************************************************
- *
- * FUNZIONE: void sincronizzaQuadranti(int sorgente[GRIGLIA_LEN][GRIGLIA_LEN], int destinazione[GRIGLIA_LEN][GRIGLIA_LEN])
- *
- * DESCRIZIONE: Sincronizza i quadranti condivisi tra due griglie del Triple Doku.
- *              Copia gli ultimi 2 quadranti (6,7) della griglia sorgente 
- *              nei primi 2 quadranti (0,1) della griglia destinazione.
- *              Il quadrante 6 (basso-sinistra) viene copiato nel quadrante 0 (alto-sinistra)
- *              e il quadrante 7 (basso-centro) viene copiato nel quadrante 1 (alto-centro).
+ * DESCRIZIONE: Copia un singolo quadrante da una griglia sorgente a una destinazione.
+ *              Mantiene la posizione relativa delle celle all'interno del quadrante.
  *
  * PARAMETRI:
- * int sorgente[GRIGLIA_LEN][GRIGLIA_LEN]: La griglia sorgente da cui copiare i quadranti
- * int destinazione[GRIGLIA_LEN][GRIGLIA_LEN]: La griglia destinazione dove copiare i quadranti
+ * int sorgente[GRIGLIA_LEN][GRIGLIA_LEN]: La griglia sorgente da cui copiare
+ * int destinazione[GRIGLIA_LEN][GRIGLIA_LEN]: La griglia destinazione dove copiare
+ * int qOrigine: Indice del quadrante sorgente (0-8)
+ * int qDestinazione: Indice del quadrante destinazione (0-8)
  *
- * RITORNO: esito, 1 quando la funzione termina con successo, intero
+ * RITORNO: int, 1 quando la funzione termina con successo
  *
  ***********************************************************************/
-int sincronizzaQuadranti(int sorgente[GRIGLIA_LEN][GRIGLIA_LEN], int destinazione[GRIGLIA_LEN][GRIGLIA_LEN]);
+int sincronizzaQuadrante(int sorgente[GRIGLIA_LEN][GRIGLIA_LEN], int destinazione[GRIGLIA_LEN][GRIGLIA_LEN], int qOrigine, int qDestinazione);
 
-//Funzione per la visualizzazione
+/*
+ **********************************************************************
+ *
+ * FUNZIONE: void visualizzaGriglia(int grigliaSingola[GRIGLIA_LEN][GRIGLIA_LEN])
+ *
+ * DESCRIZIONE: Visualizza una singola griglia 9x9 del gioco stampandola a schermo
+ *
+ * PARAMETRI:
+ * int grigliaSingola[GRIGLIA_LEN][GRIGLIA_LEN]: La griglia da visualizzare
+ *
+ * RITORNO: void
+ *
+ ***********************************************************************/
 void visualizzaGriglia(int grigliaSingola[GRIGLIA_LEN][GRIGLIA_LEN]);
 
+/*
+ **********************************************************************
+ *
+ * FUNZIONE: int risolviSudoku(int griglia[GRIGLIA_LEN][GRIGLIA_LEN])
+ *
+ * DESCRIZIONE: Risolve una griglia Sudoku utilizzando l'algoritmo backtracking.
+ *
+ * PARAMETRI:
+ * int griglia[GRIGLIA_LEN][GRIGLIA_LEN]: La griglia da risolvere
+ *
+ * RITORNO: int, 1 se la soluzione è stata trovata, 0 altrimenti
+ *
+ ***********************************************************************/
 int risolviSudoku(int griglia[GRIGLIA_LEN][GRIGLIA_LEN]);
 
-//Funzione per la mescolazione dell'array
+/*
+ **********************************************************************
+ *
+ * FUNZIONE: int shuffle(int array[], int lunghezza)
+ *
+ * DESCRIZIONE: Mescola gli elementi di un array utilizzando l'algoritmo Fisher-Yates
+ *
+ * PARAMETRI:
+ * int array[]: array da mescolare
+ * int lunghezza: la lunghezza dell'array
+ *
+ * RITORNO: int, 1 se mescolato correttamente
+ *
+ ***********************************************************************/
 int shuffle(int array[], int lunghezza);
+
+/*
+ **********************************************************************
+ *
+ * FUNZIONE: int eValidoNellaRiga(int griglia[GRIGLIA_LEN][GRIGLIA_LEN], int riga, int num)
+ *
+ * DESCRIZIONE: Verifica se un numero è già presente nella riga specificata
+ *
+ * PARAMETRI:
+ * int griglia[GRIGLIA_LEN][GRIGLIA_LEN]: La griglia da controllare
+ * int riga: L'indice della riga da verificare
+ * int num: Il numero da cercare nella riga
+ *
+ * RITORNO: int, 1 se il numero NON è presente (valido), 0 se è già presente
+ *
+ ***********************************************************************/
+int eValidoNellaRiga(int griglia[GRIGLIA_LEN][GRIGLIA_LEN], int riga, int num);
+
+/*
+ **********************************************************************
+ *
+ * FUNZIONE: int eValidoNellaColonna(int griglia[GRIGLIA_LEN][GRIGLIA_LEN], int col, int num)
+ *
+ * DESCRIZIONE: Verifica se un numero è già presente nella colonna specificata
+ *
+ * PARAMETRI:
+ * int griglia[GRIGLIA_LEN][GRIGLIA_LEN]: La griglia da controllare
+ * int col: L'indice della colonna da verificare
+ * int num: Il numero da cercare nella colonna
+ *
+ * RITORNO: int, 1 se il numero NON è presente (valido), 0 se è già presente
+ *
+ ***********************************************************************/
+int eValidoNellaColonna(int griglia[GRIGLIA_LEN][GRIGLIA_LEN], int col, int num);
+
+/*
+ **********************************************************************
+ *
+ * FUNZIONE: int eValidoNelQuadrante(int griglia[GRIGLIA_LEN][GRIGLIA_LEN], int rigaInizio, int colInizio, int num)
+ *
+ * DESCRIZIONE: Verifica se un numero è già presente nel quadrante 3x3 specificato
+ *
+ * PARAMETRI:
+ * int griglia[GRIGLIA_LEN][GRIGLIA_LEN]: La griglia da controllare
+ * int rigaInizio: Riga di inizio del quadrante (0, 3, o 6)
+ * int colInizio: Colonna di inizio del quadrante (0, 3, o 6)
+ * int num: Il numero da cercare nel quadrante
+ *
+ * RITORNO: int, 1 se il numero NON è presente (valido), 0 se è già presente
+ *
+ ***********************************************************************/
+int eValidoNelQuadrante(int griglia[GRIGLIA_LEN][GRIGLIA_LEN], int rigaInizio, int colInizio, int num);
+
+/*
+ **********************************************************************
+ *
+ * FUNZIONE: int ePosizionamentoValido(int griglia[GRIGLIA_LEN][GRIGLIA_LEN], int riga, int col, int num)
+ *
+ * DESCRIZIONE: Verifica se è possibile inserire un numero in una posizione specifica
+ *              controllando riga, colonna e quadrante
+ *
+ * PARAMETRI:
+ * int griglia[GRIGLIA_LEN][GRIGLIA_LEN]: La griglia da controllare
+ * int riga: L'indice della riga dove inserire
+ * int col: L'indice della colonna dove inserire
+ * int num: Il numero da inserire
+ *
+ * RITORNO: int, 1 se il posizionamento è valido, 0 altrimenti
+ *
+ ***********************************************************************/
+int ePosizionamentoValido(int griglia[GRIGLIA_LEN][GRIGLIA_LEN], int riga, int col, int num);
+
+/*
+ **********************************************************************
+ *
+ * FUNZIONE: int generaGrigliaCompleta(int griglia[GRIGLIA_LEN][GRIGLIA_LEN])
+ *
+ * DESCRIZIONE: Genera una griglia Sudoku completa e valida utilizzando backtracking
+ *
+ * PARAMETRI:
+ * int griglia[GRIGLIA_LEN][GRIGLIA_LEN]: La griglia da riempire
+ *
+ * RITORNO: int, 1 se la generazione è riuscita, 0 altrimenti
+ *
+ ***********************************************************************/
+int generaGrigliaCompleta(int griglia[GRIGLIA_LEN][GRIGLIA_LEN]);
+
+/*
+ **********************************************************************
+ *
+ * FUNZIONE: int generaGrigliaVincolata(int griglia[GRIGLIA_LEN][GRIGLIA_LEN], int quadrantiBloccati[9])
+ *
+ * DESCRIZIONE: Genera una griglia Sudoku completa rispettando i quadranti già popolati.
+ *              I quadranti bloccati non vengono modificati durante la generazione.
+ *
+ * PARAMETRI:
+ * int griglia[GRIGLIA_LEN][GRIGLIA_LEN]: La griglia da completare (può avere quadranti già popolati)
+ * int quadrantiBloccati[9]: Array che indica quali quadranti non devono essere modificati (1=bloccato, 0=libero)
+ *
+ * RITORNO: int, 1 se la generazione è riuscita, 0 altrimenti
+ *
+ ***********************************************************************/
+int generaGrigliaVincolata(int griglia[GRIGLIA_LEN][GRIGLIA_LEN], int quadrantiBloccati[9]);
+
+/*
+ **********************************************************************
+ *
+ * FUNZIONE: int generaTripleDoku(int griglia1[GRIGLIA_LEN][GRIGLIA_LEN], int griglia2[GRIGLIA_LEN][GRIGLIA_LEN], int griglia3[GRIGLIA_LEN][GRIGLIA_LEN])
+ *
+ * DESCRIZIONE: Genera le tre griglie del Triple Doku con la logica di condivisione dei quadranti.
+ *              Griglia1: completa
+ *              Griglia2: condivide quadranti 7,8 di griglia1 come quadranti 0,1
+ *              Griglia3: condivide quadranti 5,6 di griglia2 come quadranti 0,1
+ *
+ * PARAMETRI:
+ * int griglia1[GRIGLIA_LEN][GRIGLIA_LEN]: Prima griglia del Triple Doku
+ * int griglia2[GRIGLIA_LEN][GRIGLIA_LEN]: Seconda griglia del Triple Doku  
+ * int griglia3[GRIGLIA_LEN][GRIGLIA_LEN]: Terza griglia del Triple Doku
+ *
+ * RITORNO: int, 1 se la generazione è riuscita per tutte e tre le griglie, 0 altrimenti
+ *
+ ***********************************************************************/
+int generaTripleDoku(int griglia1[GRIGLIA_LEN][GRIGLIA_LEN], int griglia2[GRIGLIA_LEN][GRIGLIA_LEN], int griglia3[GRIGLIA_LEN][GRIGLIA_LEN]);
 
 #endif

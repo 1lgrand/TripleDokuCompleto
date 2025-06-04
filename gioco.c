@@ -38,7 +38,7 @@ int menuAvvio(){
     printf("\t\t MENU DI AVVIO\n\n");
     printf("1. Nuova Partita\n");
     printf("2. Carica Partita\n");
-    printf("3. Regole");
+    printf("3. Regole\n");
     printf("0. Esci\n");
     printf("\n> Cosa desideri fare: ");
 
