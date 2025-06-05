@@ -78,8 +78,7 @@ int CaricaPartita(char *nomeFile, char *nomeCaricamento, Partita *partita);
 
 
 
-/*
-=== INTERFACCE ===
+/* === INTERFACCE ===
 Le prossime funzioni riguardano tutte le operazioni di stampa per la visualizzazione delle varie interfacce
 */
 

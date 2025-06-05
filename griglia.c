@@ -1,5 +1,5 @@
 /*
-* Autori: 
+* Autori:
     - Abbinante Flavio
     - Campobasso Luca
     - Cillo Andrea
@@ -10,27 +10,28 @@
 * Nome File: [griglia.c]
 *
 * Scopo delle funzioni:
-* - [inizializzaGriglia]: [Inizializza a 0 tutti i valori delle griglie del gioco]
-* - [sincronizzaQuadrante]: [Sincronizza un singolo quadrante tra due griglie]
-* - [visualizzaGriglia]: [Visualizza una singola griglia 9x9]
-* - [checkRiga]: [Verifica se un numero è già presente nella riga specificata]
-* - [checkColonna]: [Verifica se un numero è già presente nella colonna specificata]
-* - [checkQuadrante]: [Verifica se un numero è già presente nel quadrante 3x3 specificato]
-* - [checkPosizionamento]: [Verifica se è possibile inserire un numero in una posizione specifica]
-* - [generaGrigliaCompleta]: [Genera una griglia Sudoku completa utilizzando backtracking]
-* - [shuffle]: [Mescola gli elementi di un array]
-* - [generaGrigliaVincolata]: [Genera una griglia rispettando i quadranti già popolati]
-* - [generaTripleDoku]: [Genera le tre griglie del Triple Doku con condivisione dei quadranti]
-* 
+* - [inizializzaGriglia]: [Inizializza a 0 tutti i valori delle griglie del gioco] 
+* - [sincronizzaQuadrante]: [Sincronizza un singolo quadrante tra due griglie] 
+* - [visualizzaGriglia]: [Visualizza una singola griglia 9x9] // DA SPOSTARE
+* - [generaGrigliaCompleta]: [Genera una griglia Sudoku completa utilizzando backtracking] 
+* - [shuffle]: [Mescola gli elementi di un array] 
+* - [generaGrigliaVincolata]: [Genera una griglia rispettando i quadranti già popolati] 
+* - [generaTripleDoku]: [Genera le tre griglie del Triple Doku con condivisione dei quadranti] 
+* - [generaGrigliaDiGioco]: [Genera la griglia di gioco in base alla difficoltà]
+* - [ricercaCoordinate]: [Verifica se la coppia (x, y) è già presente nell'array delle coordinate]
+* - [inizializzaCoordinate]: [Inizializza un array di Coordinate a valori predefiniti (9,9)]
+*
 * Lista delle modifiche effettuate:
 * [29/05/2025] - [DE MARZO] - [CREAZIONE DEL FILE]
 * [30/05/2025] - [DELL'AQUILA] - [IMPLEMENTAZIONE DELLE FUNZIONI: inizializzaGriglia ] - [Implementazione della funzione di inizializzazione per le griglie]
-* [31/05/2025] - [DE MARZO] - [IMPLEMENTAZIONE sincronizzaQuadrante] - [Funzione per sincronizzare i quadranti condivisi delle griglie]
+* [31/05/2025] - [DE MARZO] - [IMPLEMENTAZIONE sincronizzaQuadrante]
 * [02/06/2025] - [DE MARZO] - [IMPLEMENTAZIONE funzioni utili a generaGrigliaCompleta] - [Implementazione delle funzioni che compongono la struttura di generaGrigliaCompleta]
 * [02/06/2025] - [ABBINANTE] - [IMPLEMENTAZIONE generaGrigliaCompleta, shuffle]
 * [04/06/2025] - [DE MARZO] - [IMPLEMENTAZIONE generaGrigliaVincolata] - [Implementazione delle funzioni per la generazione vincolata del Triple Doku]
 * [04/06/2025] - [DE MARZO] - [CORREZIONE sincronizzaQuadrante] - [I quadranti, venivano copiati da Destra verso sinistra, causando cosi, incongruenze nella griglia]
-* [05/06/2025] - [DELL'AQUILA] - [IMPLEMENTAZIONE generaGrigliaDiGioco, ricercaCoordinate, inizializzaCoordinate] - [Implementazione della funzione per generare la griglia di gioco e le funzioni ausiliarie per gestire le coordinate]
+* [04/06/2025] - [ABBINANTE] - [IMPLEMENTAZIONE generaTripleDoku]
+* [05/06/2025] - [DELL'AQUILA] - [IMPLEMENTAZIONE generaGrigliaDiGioco, ricercaCoordinate, inizializzaCoordinate] - [Implementazione della funzione per generare la griglia di gioco e le funzioni ausiliarie per gestire le
+coordinate]
 
 */
 #include <stdio.h>
@@ -80,6 +81,7 @@ int sincronizzaQuadrante(int sorgente[GRIGLIA_LEN][GRIGLIA_LEN], int destinazion
     return 1;
 }
 
+// DA SPOSTARE in gioco.c
 void visualizzaGriglia(int grigliaSingola[GRIGLIA_LEN][GRIGLIA_LEN]) {
     int i = 0;
     int j = 0;
@@ -140,19 +142,21 @@ int risolviSudoku(int griglia[GRIGLIA_LEN][GRIGLIA_LEN]) {
     return esito;
 }
 
-int shuffle(int array[], int lunghezza) {
-    int i = lunghezza - 1;
+int shuffle(int array[], int lunghezza) { // Applica lo shuffle (mescolamento casuale) a un array di interi
+    int i = lunghezza - 1; // Parte dall'ultima posizione dell'array
     int j = 0;
     int temp = 0;
-    int esito = 1;
-    while (i > 0) {
-        j = rand() % (i + 1);
-        temp = array[i];
+    int esito = 1; // Valore di ritorno per indicare il successo dell'operazione
+
+    while (i > 0) { // Esegue il mescolamento finché non arriva all'inizio dell'array
+        j = rand() % (i + 1); // Genera un indice casuale compreso tra 0 e i
+        temp = array[i]; // Scambia array[i] con array[j]
         array[i] = array[j];
         array[j] = temp;
-        i = i - 1;
+        i = i - 1; // Passa alla posizione precedente
     }
-    return esito;
+
+    return esito; // Restituisce 1 per indicare che lo shuffle è stato eseguito
 }
 
 int generaGrigliaCompleta(int griglia[GRIGLIA_LEN][GRIGLIA_LEN]) {
@@ -360,36 +364,33 @@ int generaGrigliaDiGioco(Griglia * grigliaCompleta, Griglia * grigliaDiGioco, in
     }while(j < i);
 }
 
-int ricercaCoordinate(Coordinate * coordinate, int x, int y ){
-
+int ricercaCoordinate(Coordinate * coordinate, int x, int y ){ // Verifica se la coppia (x, y) è già presente nell'array delle coordinate
     int i = 0;
-    int trovato = 0;
+    int trovato = 0; // Flag che indica se è stato trovato un duplicato (1) o no (0)
 
-
-    while (i < MAX_COORDINATE_MEMORIZZABILI)
+    while (i < MAX_COORDINATE_MEMORIZZABILI) // Scorre tutte le coordinate salvate
     {
-        if(coordinate[i].x == x && coordinate[i].y == y){
-            trovato = 1;
+        if(coordinate[i].x == x && coordinate[i].y == y){ // Confronta la coordinata attuale con quella cercata
+            trovato = 1; // Se la coordinata è già presente, imposta trovato a 1
         }
 
-        i = i + 1;
+        i = i + 1; // Passa alla coordinata successiva
     }
     
-    return trovato;
-    
+    return trovato; // Restituisce 1 se duplicato trovato, altrimenti 0
+
     /* Se trovato = 1 ALLORA rigenera, altrimenti niente */
 }
 
-int inizializzaCoordinate(Coordinate * coordinate){
-
+int inizializzaCoordinate(Coordinate * coordinate){ // Inizializza un array di Coordinate a valori predefiniti (9,9)
     int i = 0;
-    while (i < MAX_COORDINATE_MEMORIZZABILI){
-        coordinate[i].x = 9; 
-        coordinate[i].y = 9; 
-        i = i + 1;
+    while (i < MAX_COORDINATE_MEMORIZZABILI){ // Itera per ogni posizione fino al limite massimo
+
+        coordinate[i].x = 9; // Imposta la coordinata x a 9
+        coordinate[i].y = 9; // Imposta la coordinata y a 9
+
+        i = i + 1; // Incrementa l'indice per passare alla coordinata successiva
     }
-
-    return 1;
-
+    return 1; // Restituisce 1 per indicare il successo dell'operazione
 }
 

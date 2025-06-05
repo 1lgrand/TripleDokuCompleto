@@ -17,6 +17,8 @@
 * Lista delle modifiche effettuate:
 * [29/05/2025] - [DE MARZO] - [CREAZIONE DEL FILE]
 * [01/06/2025] - [DE MARZO] - [Implementazione menu di avvio]
+* [03/06/2025] - [CAMPOBASSO] - [Prototipi salvaPartita, caricaPartita]
+
 */
 
 #include <stdio.h>

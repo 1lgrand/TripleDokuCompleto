@@ -10,7 +10,11 @@
 * Nome File: [validazione.c]
 *
 * Scopo delle funzioni:
-* - [nome_funzione_1]: [Breve descrizione dello scopo della funzione 1]
+* - [checkRiga]: [Verifica se un numero è già presente nella riga specificata] 
+* - [checkColonna]: [Verifica se un numero è già presente nella colonna specificata] 
+* - [checkQuadrante]: [Verifica se un numero è già presente nel quadrante 3x3 specificato] 
+* - [checkPosizionamento]: [Verifica se è possibile inserire un numero in una posizione specifica]
+* - [calcolaModulo]: [Calcola il resto della divisione tra due numeri interi]
 * 
 *
 *

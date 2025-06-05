@@ -112,7 +112,7 @@ int risolviSudoku(int griglia[GRIGLIA_LEN][GRIGLIA_LEN]);
  *
  * FUNZIONE: int shuffle(int array[], int lunghezza)
  *
- * DESCRIZIONE: Mescola gli elementi di un array utilizzando l'algoritmo Fisher-Yates
+ * DESCRIZIONE: Mescola gli elementi di un array
  *
  * PARAMETRI:
  * int array[]: array da mescolare
@@ -155,6 +155,7 @@ int generaGrigliaCompleta(int griglia[GRIGLIA_LEN][GRIGLIA_LEN]);
  ***********************************************************************/
 int generaGrigliaVincolata(int griglia[GRIGLIA_LEN][GRIGLIA_LEN], int quadrantiBloccati[9]);
 
+//TODO: cambiare DS nei parametri da int (x3) a Griglia * grigliaCompleta, e rimuovere l'inizializzazione
 /*
  **********************************************************************
  *
@@ -175,7 +176,7 @@ int generaGrigliaVincolata(int griglia[GRIGLIA_LEN][GRIGLIA_LEN], int quadrantiB
  ***********************************************************************/
 int generaTripleDoku(int griglia1[GRIGLIA_LEN][GRIGLIA_LEN], int griglia2[GRIGLIA_LEN][GRIGLIA_LEN], int griglia3[GRIGLIA_LEN][GRIGLIA_LEN]);
 
-
+//TODO: SCRIVERE COMMENTO
 int generaGrigliaDiGioco(Griglia * grigliaCompleta, Griglia * grigliaDiGioco, int difficolta);
 
 /*
@@ -193,11 +194,32 @@ int generaGrigliaDiGioco(Griglia * grigliaCompleta, Griglia * grigliaDiGioco, in
  * int y, coordinata y della griglia che si sta andando a generare
  *
  * RITORNO: int, 1 se è stato trovato un duplicato, 0 se non è stato trovato alcun duplicato
+ * 
+ * NOTA SUGLI ALGORITMI: viene utilizzata l'algoritmo di ricerca lineare per controllare eventuali duplicati.
  *
  ***********************************************************************/
 int ricercaCoordinate(Coordinate * coordinate, int x, int y );
 
 
+/*
+ **********************************************************************
+ *
+ * FUNZIONE: inizializzaCoordinate(Coordinate * coordinate)
+ *
+ * DESCRIZIONE: Inizializza tutte le coordinate dell'array passato come parametro
+ *              con valori predefiniti (x = 9, y = 9).
+ *              Serve a evitare che nell'array siano presenti valori superflui o duplicati
+ *              prima della generazione delle vere coordinate per la singola griglia.
+ *
+ * PARAMETRI:
+ * Coordinate * coordinate, array di coordinate da inizializzare,
+ * utilizzato per salvare tutte le coordinate generate finora per prevenire duplicati.
+ *
+ * RITORNO: int, 1 per indicare che l'inizializzazione è stata completata con successo
+ * 
+ *
+ *
+ **********************************************************************/
 int inizializzaCoordinate(Coordinate * coordinate);
 
 
