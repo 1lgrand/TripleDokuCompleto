@@ -19,6 +19,7 @@
 * [29/05/2025] - [DE MARZO] - [CREAZIONE DEL FILE]
 * [30/05/2025] - [DE MARZO] - [Scrittura della funzione main e test della funzione di inizializzazione]
 * [01/06/2025] - [DE MARZO] - [Test menu di avvio] 
+* [05/06/2025] - [DE MARZO, DELL'AQUILA] - [Testing generazione griglia di gioco e visualizzazione griglia con menu di avvio] 
 */
 
 #include "validazione.h"
@@ -104,10 +105,23 @@ int main(){
 
     printf("\n\n");
 
-    printf("Hai selezionato la difficolta: %d\n",difficolta);
+    printf("Hai selezionato la difficolta: %d\n",difficolta); 
+
+    generaGrigliaDiGioco(&grigliaCompleta,&grigliaDiGioco,difficolta);
+
+    printf("\n\n\n\t\t ==== GRIGLIA DI GIOCO =====");
+
+    printf("\nGriglia A:\n");
+    visualizzaGriglia(grigliaDiGioco.grigliaA);
+
+    printf("\nGriglia B:\n");
+    visualizzaGriglia(grigliaDiGioco.grigliaB);
+
+    printf("\nGriglia C:\n");
+    visualizzaGriglia(grigliaDiGioco.grigliaC);
+
+
 
     system("pause");
     return 0;
 }
-
-

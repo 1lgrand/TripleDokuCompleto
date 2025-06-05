@@ -28,20 +28,25 @@
 * [31/05/2025] - [DE MARZO] - [IMPLEMENTAZIONE sincronizzaQuadrante] - [Funzione per sincronizzare i quadranti condivisi delle griglie]
 * [02/06/2025] - [DE MARZO] - [IMPLEMENTAZIONE funzioni utili a generaGrigliaCompleta] - [Implementazione delle funzioni che compongono la struttura di generaGrigliaCompleta]
 * [02/06/2025] - [ABBINANTE] - [IMPLEMENTAZIONE generaGrigliaCompleta, shuffle]
-* [04/06/2025] - [DE MARZO] - [IMPLEMENTAZIONE generazione vincolata] - [Implementazione delle funzioni per la generazione vincolata del Triple Doku]
-* [04/06/2025] - [CORREZIONE] - [Correzione sincronizzazione quadranti e un solo ritorno per funzione]
+* [04/06/2025] - [DE MARZO] - [IMPLEMENTAZIONE generaGrigliaVincolata] - [Implementazione delle funzioni per la generazione vincolata del Triple Doku]
+* [04/06/2025] - [DE MARZO] - [CORREZIONE sincronizzaQuadrante] - [I quadranti, venivano copiati da Destra verso sinistra, causando cosi, incongruenze nella griglia]
+* [05/06/2025] - [DELL'AQUILA] - [IMPLEMENTAZIONE generaGrigliaDiGioco, ricercaCoordinate, inizializzaCoordinate] - [Implementazione della funzione per generare la griglia di gioco e le funzioni ausiliarie per gestire le coordinate]
+
 */
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+
 #include "griglia.h"
 #include "validazione.h"
 
 int inizializzaGriglia(int grigliaSingola[GRIGLIA_LEN][GRIGLIA_LEN]) {
-    int y = 0;
-    int x = 0;
-    int esito = 0;
-    while (y < GRIGLIA_LEN) {
+    int y = 0; // Inizializza la variabile y per le righe
+    int x = 0; // Inizializza la variabile x per le colonne
+    int esito = 0; // Inizializza la variabile di esito
+
+    // ciclo per inizializzare la griglia a 0
+    while (y < GRIGLIA_LEN) { 
         x = 0;
         while (x < GRIGLIA_LEN) {
             grigliaSingola[y][x] = 0;
@@ -266,3 +271,125 @@ int generaTripleDoku(int griglia1[GRIGLIA_LEN][GRIGLIA_LEN], int griglia2[GRIGLI
 
     return esito;
 }
+
+int generaGrigliaDiGioco(Griglia * grigliaCompleta, Griglia * grigliaDiGioco, int difficolta){
+    
+    /*
+    
+    1) Generiamo una coordinata
+    2) Controlliamo se è presente
+    2.1) Se è PRESENTE ne generiamo un altra (2)
+    3) Memorizziamo la coordinata
+    4) Copiamo il valore della cella in grigliaCompleta corrispondente alla coordinata generata, nella stessa cella della grigliadigioco
+    
+    */
+
+    Coordinate coordinate[MAX_COORDINATE_MEMORIZZABILI];
+    int i = 0; // contatore
+    int j = 0;  
+    int nCelle = 0;
+    int xGenerata = 0;
+    int yGenerata = 0;
+
+    if(difficolta == 1){
+        nCelle = C_FACILE; // Facile
+    } else if(difficolta == 2){
+        nCelle = C_INTERMEDIO; // Medio
+    } else if(difficolta == 3){
+        nCelle = C_DIFFICLE; // Difficile
+    }
+
+    // ====  Generazione Griglia A ====
+
+    while (i < nCelle){
+        do{
+            xGenerata = rand() % 9;
+            yGenerata = rand() % 9; 
+        }while (ricercaCoordinate(coordinate, xGenerata, yGenerata) != 0);
+        coordinate[i].x = xGenerata;
+        coordinate[i].y = yGenerata;
+        i = i + 1;
+    }
+
+    do{
+        grigliaDiGioco->grigliaA[coordinate[j].x][coordinate[j].y] = grigliaCompleta->grigliaA[coordinate[j].x][coordinate[j].y];
+        j = j + 1;
+    }while(j < i);
+
+    inizializzaCoordinate(coordinate);
+
+    
+    // ====  Generazione Griglia B ====
+    i = 0;
+    j = 0;
+
+    while (i < nCelle){
+        do{
+            xGenerata = rand() % 9; 
+            yGenerata = rand() % 9; 
+        }while (ricercaCoordinate(coordinate, xGenerata, yGenerata) != 0);
+        coordinate[i].x = xGenerata;
+        coordinate[i].y = yGenerata;
+        i = i + 1;
+    }
+
+    do{
+        grigliaDiGioco->grigliaB[coordinate[j].x][coordinate[j].y] = grigliaCompleta->grigliaB[coordinate[j].x][coordinate[j].y];
+        j = j + 1;
+    }while(j < i);
+
+    inizializzaCoordinate(coordinate);
+
+    // ====  Generazione Griglia C ====
+    i = 0;
+    j = 0;
+
+    while (i < nCelle){
+        do{
+            xGenerata = rand() % 9; 
+            yGenerata = rand() % 9; 
+        }while (ricercaCoordinate(coordinate, xGenerata, yGenerata) != 0);
+        coordinate[i].x = xGenerata;
+        coordinate[i].y = yGenerata;
+        i = i + 1;
+    }
+
+    do{
+        grigliaDiGioco->grigliaC[coordinate[j].x][coordinate[j].y] = grigliaCompleta->grigliaC[coordinate[j].x][coordinate[j].y];
+        j = j + 1;
+    }while(j < i);
+}
+
+int ricercaCoordinate(Coordinate * coordinate, int x, int y ){
+
+    int i = 0;
+    int trovato = 0;
+
+
+    while (i < MAX_COORDINATE_MEMORIZZABILI)
+    {
+        if(coordinate[i].x == x && coordinate[i].y == y){
+            trovato = 1;
+        }
+
+        i = i + 1;
+    }
+    
+    return trovato;
+    
+    /* Se trovato = 1 ALLORA rigenera, altrimenti niente */
+}
+
+int inizializzaCoordinate(Coordinate * coordinate){
+
+    int i = 0;
+    while (i < MAX_COORDINATE_MEMORIZZABILI){
+        coordinate[i].x = 9; 
+        coordinate[i].y = 9; 
+        i = i + 1;
+    }
+
+    return 1;
+
+}
+

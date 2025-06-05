@@ -17,6 +17,16 @@
 #include <stdlib.h>
 
 #define GRIGLIA_LEN (9) /* Dimensione fissa della griglia Sudoku 9x9 */
+#define C_FACILE (35) /* Numero di celle piene nella modalità FACILE */
+#define C_INTERMEDIO (25) /* Numero di celle piene nella modalità INTERMEDIO */
+#define C_DIFFICLE (20) /* Numero di celle piene nella modalità DIFFICILE */
+
+/*
+* Numero massimo di coordinate memorizzabili
+* per evitare che ci siano duplicati nella generazione casuale
+* annullando la possibilita di riempire meno celle di quanto previsto dalla difficoltà
+*/
+#define MAX_COORDINATE_MEMORIZZABILI (35) 
 
 // ================== STRUTTURE DATI ==================
 
@@ -25,6 +35,11 @@ typedef struct {
     int grigliaB[GRIGLIA_LEN][GRIGLIA_LEN];
     int grigliaC[GRIGLIA_LEN][GRIGLIA_LEN];
 } Griglia;
+
+typedef struct {
+    int x;
+    int y;
+} Coordinate;
 
 // ================== PROTOTIPI FUNZIONI ==================
 
@@ -159,5 +174,31 @@ int generaGrigliaVincolata(int griglia[GRIGLIA_LEN][GRIGLIA_LEN], int quadrantiB
  *
  ***********************************************************************/
 int generaTripleDoku(int griglia1[GRIGLIA_LEN][GRIGLIA_LEN], int griglia2[GRIGLIA_LEN][GRIGLIA_LEN], int griglia3[GRIGLIA_LEN][GRIGLIA_LEN]);
+
+
+int generaGrigliaDiGioco(Griglia * grigliaCompleta, Griglia * grigliaDiGioco, int difficolta);
+
+/*
+ **********************************************************************
+ *
+ * FUNZIONE: ricercaCoordinate(Coordinate * coordinate, int x, int y )
+ *
+ * DESCRIZIONE: Ricerca usando l'algoritmo di ricerca lineare le coordinate generate per la generazione della griglia di gioco per l'utente
+ *              Qualora si verificasse un duplicato, il numero di celle già riempite potrebbe risultare minore rispetto al numero previsto dalla difficoltà.
+ *              Si risolve il problema, salvando le coordinate generate al fine di garantire la corretta generazione.
+ *
+ * PARAMETRI:
+ * Coordinate coordinate, array di coordinate dove sono salvate tutte le precedenti, di dimensione 30, che è il caso "peggiore", dove è necessario salvare piu coordinate
+ * int x, coordinata x della griglia che si sta andando a generare
+ * int y, coordinata y della griglia che si sta andando a generare
+ *
+ * RITORNO: int, 1 se è stato trovato un duplicato, 0 se non è stato trovato alcun duplicato
+ *
+ ***********************************************************************/
+int ricercaCoordinate(Coordinate * coordinate, int x, int y );
+
+
+int inizializzaCoordinate(Coordinate * coordinate);
+
 
 #endif

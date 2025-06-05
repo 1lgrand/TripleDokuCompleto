@@ -18,7 +18,8 @@
 * [29/05/2025] - [DE MARZO] - [CREZIONE DEL FILE]
 * [02/06/2025] - [DE MARZO] - [Prototipo e implementazone calcolaModulo,checkRiga, checkColonna]
 * [04/06/2025] - [CILLO] - [Prototipi di funzione: checkQuadrante, checkPosizionamento] 
-* 
+* [05/06/2025] - [CILLO] - [Implementazione checkRiga, checkColonna, checkQuadrante, checkPosizionamento] 
+
 */
 
 #include "gioco.h"
@@ -26,48 +27,65 @@
 #include "validazione.h"
 #include <stdio.h>
 
-/*     X CILLO ( CANCELLAMI DOPO CHE HAI FINITO )
+/* == PER CILLO: COMMENTA BENE LE ISTRUZIONI DELLE FUNZIONI */
+
+int checkRiga(int griglia[GRIGLIA_LEN][GRIGLIA_LEN], int riga, int num) {
+    int col = 0;
+    int esito = 1;
+    while (col < GRIGLIA_LEN && esito == 1) {
+        if (griglia[riga][col] == num) {
+            esito = 0;
+        }
+        col = col + 1;
+    }
+    return esito;
+}
 
 
-    - checkRiga:
-        Controlla se il numero 'num' è già presente nella riga specificata.
-        Esempio: se la riga 0 contiene [5, 3, 0, 0, 7, 0, 0, 0, 0] e num è 5, restituisce 0 (già presente).
-                 Se num è 4, restituisce 1 (non presente → posizionabile in quella riga).
 
-    - checkColonna:
-        Stessa logica della riga, ma applicata alla colonna.
-        Esempio: se la colonna 1 contiene [3, 0, 9, 0, 0, 0, 6, 0, 0] e num è 9, restituisce 0.
+int checkColonna(int griglia[GRIGLIA_LEN][GRIGLIA_LEN], int col, int num) {
+    int riga = 0;
+    int esito = 1;
+    while (riga < GRIGLIA_LEN && esito == 1) {
+        if (griglia[riga][col] == num) {
+            esito = 0;
+        }
+        riga = riga + 1;
+    }
+    return esito;
+}
 
-    - checkQuadrante:
-        Controlla se il numero è già presente nel quadrante 3x3 che contiene la cella.
-        Per trovare il quadrante corretto, si passa l’indice della prima riga e colonna del blocco.
-        Esempio: se voglio controllare la cella (4,4), il quadrante inizia da (3,3), quindi si passa (3,3).
-                 La funzione esamina la sottogriglia da (3,3) a (5,5). Se il numero è presente lì, restituisce 0.
 
-    - checkPosizionamento:
-        Verifica se è lecito inserire il numero 'num' nella posizione (riga, col), controllando:
-        - Se il numero non è nella stessa riga
-        - Se il numero non è nella stessa colonna
-        - Se il numero non è nel quadrante 3x3 corrispondente
 
-        Pseudocodice:
-            rigaQuadrante = (riga / 3) * 3
-            colQuadrante = (col / 3) * 3
+int checkQuadrante(int griglia[GRIGLIA_LEN][GRIGLIA_LEN], int rigaInizio, int colInizio, int num) {
+    int i = rigaInizio;
+    int j = 0;
+    int esito = 1;
+    while (i < rigaInizio + 3 && esito == 1) {
+        j = colInizio;
+        while (j < colInizio + 3 && esito == 1) {
+            if (griglia[i][j] == num) {
+                esito = 0;
+            }
+            j = j + 1;
+        }
+        i = i + 1;
+    }
+    return esito;
+}
 
-            se checkRiga(riga, num) è OK
-               e checkColonna(col, num) è OK
-               e checkQuadrante(rigaQuadrante, colQuadrante, num) è OK
-            allora
-               restituisci 1 (posizionamento valido)
-            altrimenti
-               restituisci 0 (non valido)
 
-        Esempio: per posizionare il numero 2 nella cella (0,2):
-            - controlla la riga 0
-            - controlla la colonna 2
-            - controlla il quadrante in alto a sinistra (rigaInizio = 0, colInizio = 0)
-            Se 2 non è presente in nessuna di queste tre aree → restituisce 1.
-*/
+
+int checkPosizionamento(int griglia[GRIGLIA_LEN][GRIGLIA_LEN], int riga, int col, int num) {
+    int rigaQuadrante = (riga / 3) * 3;
+    int colQuadrante = (col / 3) * 3;
+    int esito = 0;
+    if (checkRiga(griglia, riga, num) == 1 && checkColonna(griglia, col, num) == 1 && checkQuadrante(griglia, rigaQuadrante, colQuadrante, num) == 1) {
+        esito = 1;
+    }
+    return esito;
+}
+
 
 
 
