@@ -109,6 +109,20 @@ int titolo();
  ***********************************************************************/
 int menuAvvio();
 
+/*
+ **********************************************************************
+ *
+ * FUNZIONE: void visualizzaGriglia(int grigliaSingola[GRIGLIA_LEN][GRIGLIA_LEN])
+ *
+ * DESCRIZIONE: Visualizza una singola griglia 9x9 del gioco stampandola a schermo
+ *
+ * PARAMETRI:
+ * int grigliaSingola[GRIGLIA_LEN][GRIGLIA_LEN]: La griglia da visualizzare
+ *
+ * RITORNO: void
+ *
+ ***********************************************************************/
+void visualizzaGriglia(int grigliaSingola[GRIGLIA_LEN][GRIGLIA_LEN]);
 
 
 #endif

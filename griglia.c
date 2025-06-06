@@ -12,7 +12,6 @@
 * Scopo delle funzioni:
 * - [inizializzaGriglia]: [Inizializza a 0 tutti i valori delle griglie del gioco] 
 * - [sincronizzaQuadrante]: [Sincronizza un singolo quadrante tra due griglie] 
-* - [visualizzaGriglia]: [Visualizza una singola griglia 9x9] // DA SPOSTARE
 * - [generaGrigliaCompleta]: [Genera una griglia Sudoku completa utilizzando backtracking] 
 * - [shuffle]: [Mescola gli elementi di un array] 
 * - [generaGrigliaVincolata]: [Genera una griglia rispettando i quadranti già popolati] 
@@ -30,8 +29,10 @@
 * [04/06/2025] - [DE MARZO] - [IMPLEMENTAZIONE generaGrigliaVincolata] - [Implementazione delle funzioni per la generazione vincolata del Triple Doku]
 * [04/06/2025] - [DE MARZO] - [CORREZIONE sincronizzaQuadrante] - [I quadranti, venivano copiati da Destra verso sinistra, causando cosi, incongruenze nella griglia]
 * [04/06/2025] - [ABBINANTE] - [IMPLEMENTAZIONE generaTripleDoku]
-* [05/06/2025] - [DELL'AQUILA] - [IMPLEMENTAZIONE generaGrigliaDiGioco, ricercaCoordinate, inizializzaCoordinate] - [Implementazione della funzione per generare la griglia di gioco e le funzioni ausiliarie per gestire le
-coordinate]
+* [05/06/2025] - [DELL'AQUILA] - [IMPLEMENTAZIONE generaGrigliaDiGioco, ricercaCoordinate, inizializzaCoordinate] - [Implementazione della funzione per generare la griglia di gioco e le funzioni ausiliarie per gestire le coordinate]
+* [06/06/2025] - [ABBINANTE] - [CORREZIONE ricercaCoordinate] - [Risolto un bug che ciclava all'infinito nell'array]
+* [06/06/2025] - [ABBINANTE - DE MARZO] - [OTTIMIZZAZIONE funzioni di generazione della griglia completa] - [Si ottimizzano le funzioni rimuovendo variabili superflue]
+
 
 */
 #include <stdio.h>
@@ -60,9 +61,12 @@ int inizializzaGriglia(int grigliaSingola[GRIGLIA_LEN][GRIGLIA_LEN]) {
 
 int sincronizzaQuadrante(int sorgente[GRIGLIA_LEN][GRIGLIA_LEN], int destinazione[GRIGLIA_LEN][GRIGLIA_LEN], int qOrigine, int qDestinazione) {
     
+    
+    // Trova la colonna e riga d'origine del quadrante
     int rigaInizioOrigine = (qOrigine / 3) * 3;
     int colonnaInizioOrigine = (calcolaModulo(qOrigine,3)) * 3;
-
+    
+    // Trova la colonna e riga di destinazione del quadrante
     int rigaInizioDest = (qDestinazione / 3) * 3;
     int colonnaInizioDest = (calcolaModulo(qDestinazione,3)) * 3;
 
@@ -72,67 +76,54 @@ int sincronizzaQuadrante(int sorgente[GRIGLIA_LEN][GRIGLIA_LEN], int destinazion
     while (y < 3) {
         x = 0;
         while (x < 3) {
+            // Copia l'elemento corrispondente dal quadrante sorgente al quadrante destinazione
             destinazione[rigaInizioDest + y][colonnaInizioDest + x] = sorgente[rigaInizioOrigine + y][colonnaInizioOrigine + x];
             x = x + 1;
         }
         y = y + 1;
     }
-
+    // Esito operazione
     return 1;
 }
 
-// DA SPOSTARE in gioco.c
-void visualizzaGriglia(int grigliaSingola[GRIGLIA_LEN][GRIGLIA_LEN]) {
-    int i = 0;
-    int j = 0;
-    while (i < GRIGLIA_LEN) {
-        j = 0;
-        while (j < GRIGLIA_LEN) {
-            printf(" %d ", grigliaSingola[i][j]);
-            j = j + 1;
-        }
-        printf("\n");
-        i = i + 1;
-    }
-}
 
 int risolviSudoku(int griglia[GRIGLIA_LEN][GRIGLIA_LEN]) {
     int riga = 0;
     int col = 0;
-    int numeri[9] = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+    int numeri[9] = {1, 2, 3, 4, 5, 6, 7, 8, 9}; // array di numeri da provare
     int num = 0;
     int i = 0;
     int cellaVuotaTrovata = 0;
     int esito = 0;
 
     // Trova la prima cella vuota
-    while (riga < GRIGLIA_LEN && cellaVuotaTrovata == 0) {
+    while (riga < GRIGLIA_LEN && cellaVuotaTrovata == 0) { // trova la prima cella vuota scorrendo sulla riga
         col = 0;
-        while (col < GRIGLIA_LEN && cellaVuotaTrovata == 0) {
+        while (col < GRIGLIA_LEN && cellaVuotaTrovata == 0) { // trova la prima cella vuota scorrendo sulla colonna
             if (griglia[riga][col] == 0) {
-                cellaVuotaTrovata = 1;
+                cellaVuotaTrovata = 1; // cella vuota trovata
             } else {
                 col = col + 1;
             }
         }
-        if (cellaVuotaTrovata == 0) {
+        if (cellaVuotaTrovata == 0) { 
             riga = riga + 1;
         }
     }
 
-    if (cellaVuotaTrovata == 0) {
+    if (cellaVuotaTrovata == 0) { // se non sono state trovate celle vuote la griglia è completa
         esito = 1;
-    } else {
+    } else { // mescola l'array dei numeri per introdurre casualità nella ricerca
         shuffle(numeri, 9);
         i = 0;
         while (i < 9 && esito == 0) {
             num = numeri[i];
-            if (checkPosizionamento(griglia, riga, col, num) == 1) {
+            if (checkPosizionamento(griglia, riga, col, num) == 1) { // controlla se è possibile inserire il numero in quella posizione
                 griglia[riga][col] = num;
                 if (risolviSudoku(griglia) == 1) {
-                    esito = 1;
+                    esito = 1;  // griglia risolta con successo
                 } else {
-                    griglia[riga][col] = 0;
+                    griglia[riga][col] = 0; // reimposta griglia a 0 e prova con un altro valore
                 }
             }
             i = i + 1;
@@ -160,121 +151,119 @@ int shuffle(int array[], int lunghezza) { // Applica lo shuffle (mescolamento ca
 }
 
 int generaGrigliaCompleta(int griglia[GRIGLIA_LEN][GRIGLIA_LEN]) {
-    int riga = 0;
-    int col = 0;
-    int numeri[9] = {1, 2, 3, 4, 5, 6, 7, 8, 9};
-    int num = 0;
-    int i = 0;
-    int cellaVuotaTrovata = 0;
-    int esito = 0;
+    int riga = 0;  // Indice della riga corrente
+    int col = 0;  // Indice della colonna corrente
+    int numeri[9] = {1, 2, 3, 4, 5, 6, 7, 8, 9};  // Numeri da provare nelle celle
+    int num = 0;  // Numero corrente da tentare
+    int i = 0;  // Indice per scorrere l'array dei numeri
+    int cellaVuotaTrovata = 0;  // Flag per indicare se è stata trovata una cella vuota
+    int esito = 0;  // 1 se completamento riuscito, 0 altrimenti
 
-    while (riga < GRIGLIA_LEN && cellaVuotaTrovata == 0) {
+    while (riga < GRIGLIA_LEN && cellaVuotaTrovata == 0) {  // Cerca la prima cella vuota
         col = 0;
         while (col < GRIGLIA_LEN && cellaVuotaTrovata == 0) {
             if (griglia[riga][col] == 0) {
-                cellaVuotaTrovata = 1;
+                cellaVuotaTrovata = 1;  // Trovata cella da riempire
             } else {
-                col = col + 1;
+                col = col + 1;  // Passa alla colonna successiva
             }
         }
         if (cellaVuotaTrovata == 0) {
-            riga = riga + 1;
+            riga = riga + 1;  // Passa alla riga successiva
         }
     }
 
     if (cellaVuotaTrovata == 0) {
-        esito = 1;
+        esito = 1;  // Nessuna cella vuota, griglia completata
     } else {
-        shuffle(numeri, 9);
+        shuffle(numeri, 9);  // Mischia i numeri da provare
         i = 0;
         while (i < 9 && esito == 0) {
-            num = numeri[i];
-            if (checkPosizionamento(griglia, riga, col, num) == 1) {
-                griglia[riga][col] = num;
+            num = numeri[i];  // Prende il numero corrente
+            if (checkPosizionamento(griglia, riga, col, num) == 1) {  // Verifica se il numero è valido
+                griglia[riga][col] = num;  // Inserisce il numero
                 if (generaGrigliaCompleta(griglia) == 1) {
-                    esito = 1;
+                    esito = 1;  // Griglia completata ricorsivamente
                 } else {
-                    griglia[riga][col] = 0;
+                    griglia[riga][col] = 0;  
                 }
             }
-            i = i + 1;
+            i = i + 1;  // Passa al numero successivo
         }
     }
 
-    return esito;
+    return esito;  // Ritorna 1 se la generazione è andata a buon fine
 }
+
 
 int generaGrigliaVincolata(int griglia[GRIGLIA_LEN][GRIGLIA_LEN], int quadrantiBloccati[9]) {
-    int riga = 0;
-    int col = 0;
-    int numeri[9] = {1, 2, 3, 4, 5, 6, 7, 8, 9};
-    int num = 0;
-    int i = 0;
-    int cellaVuotaTrovata = 0;
-    int indiceQuadrante = 0;
-    int esito = 0;
+    int riga = 0; // Indice della riga corrente
+    int col = 0; // Indice della colonna corrente
+    int numeri[9] = {1,2,3,4,5,6,7,8,9}; // Numeri da provare nelle celle
+    int num = 0; // Numero corrente da provare
+    int i = 0; // Indice per l'array dei numeri
+    int cellaVuotaTrovata = 0; // Flag che indica se è stata trovata una cella modificabile
+    int indiceQuadrante = 0; // Indice del quadrante corrente (0-8)
+    int esito = 0; // 1 se la generazione va a buon fine, 0 altrimenti
 
-    while (riga < GRIGLIA_LEN && cellaVuotaTrovata == 0) {
+    while (riga < GRIGLIA_LEN && cellaVuotaTrovata == 0) { // Scorri righe finché non trovi una cella vuota valida
         col = 0;
         while (col < GRIGLIA_LEN && cellaVuotaTrovata == 0) {
-            indiceQuadrante = (riga / 3) * 3 + (col / 3);
+            indiceQuadrante = (riga / 3) * 3 + (col / 3); // Calcola indice quadrante
             if (griglia[riga][col] == 0 && quadrantiBloccati[indiceQuadrante] == 0) {
-                cellaVuotaTrovata = 1;
+                cellaVuotaTrovata = 1; // Trovata cella libera e non bloccata
             } else {
-                col = col + 1;
+                col = col + 1; // Passa alla colonna successiva
             }
         }
         if (cellaVuotaTrovata == 0) {
-            riga = riga + 1;
+            riga = riga + 1; // Passa alla riga successiva
         }
     }
 
     if (cellaVuotaTrovata == 0) {
-        esito = 1;
+        esito = 1; // Nessuna cella da riempire, griglia completa
     } else {
-        shuffle(numeri, 9);
+        shuffle(numeri, 9); // Mischia i numeri da provare
         i = 0;
         while (i < 9 && esito == 0) {
-            num = numeri[i];
-            if (checkPosizionamento(griglia, riga, col, num) == 1) {
-                griglia[riga][col] = num;
+            num = numeri[i]; // Prende un numero casuale
+            if (checkPosizionamento(griglia, riga, col, num) == 1) { // Verifica se il numero è valido
+                griglia[riga][col] = num; // Inserisce il numero nella posizione della griglia
                 if (generaGrigliaVincolata(griglia, quadrantiBloccati) == 1) {
-                    esito = 1;
+                    esito = 1; 
                 } else {
-                    griglia[riga][col] = 0;
+                    griglia[riga][col] = 0; 
                 }
             }
-            i = i + 1;
+            i = i + 1; // Prova il numero successivo
         }
     }
 
-    return esito;
+    return esito; // Ritorna 1 se la griglia è completa, 0 altrimenti
 }
 
-int generaTripleDoku(int griglia1[GRIGLIA_LEN][GRIGLIA_LEN], int griglia2[GRIGLIA_LEN][GRIGLIA_LEN], int griglia3[GRIGLIA_LEN][GRIGLIA_LEN]) {
-    int quadrantiBloccati[9] = {1, 1, 0, 0, 0, 0, 0, 0, 0};
-    int esito = 0;
+int generaTripleDoku(Griglia * grigliaDiGioco) {
+    int quadrantiBloccati[9] = {1, 1, 0, 0, 0, 0, 0, 0, 0};  // Blocca i quadranti 0 e 1 (già occupati)
+    int esito = 0;  // Variabile di ritorno, indica successo o fallimento
 
-    inizializzaGriglia(griglia1);
-    inizializzaGriglia(griglia2);
-    inizializzaGriglia(griglia3);
+    if (generaGrigliaCompleta(grigliaDiGioco->grigliaA) == 1) {  // Genera prima griglia completa
+        sincronizzaQuadrante(grigliaDiGioco->grigliaA, grigliaDiGioco->grigliaB, 7, 0);  // Copia quadrante 7 in 0
+        sincronizzaQuadrante(grigliaDiGioco->grigliaA, grigliaDiGioco->grigliaB, 8, 1);  // Copia quadrante 8 in 1
 
-    if (generaGrigliaCompleta(griglia1) == 1) {
-        sincronizzaQuadrante(griglia1, griglia2, 7, 0); // Quadrante 7 → 0
-        sincronizzaQuadrante(griglia1, griglia2, 8, 1); // Quadrante 8 → 1
+        if (generaGrigliaVincolata(grigliaDiGioco->grigliaB, quadrantiBloccati) == 1) {  // Genera seconda griglia con vincoli
+            sincronizzaQuadrante(grigliaDiGioco->grigliaB, grigliaDiGioco->grigliaC, 7, 0);  // Copia quadrante 7 in 0
+            sincronizzaQuadrante(grigliaDiGioco->grigliaB, grigliaDiGioco->grigliaC, 8, 1);  // Copia quadrante 8 in 1
 
-        if (generaGrigliaVincolata(griglia2, quadrantiBloccati) == 1) {
-            sincronizzaQuadrante(griglia2, griglia3, 7, 0); // Quadrante 5 → 0
-            sincronizzaQuadrante(griglia2, griglia3, 8, 1); // Quadrante 6 → 1
-
-            if (generaGrigliaVincolata(griglia3, quadrantiBloccati) == 1) {
-                esito = 1;
+            if (generaGrigliaVincolata(grigliaDiGioco->grigliaC, quadrantiBloccati) == 1) {  // Genera terza griglia con vincoli
+                esito = 1;  // Tutto andato a buon fine
             }
         }
     }
 
-    return esito;
+    return esito;  // Ritorna 1 se riuscito, altrimenti 0
 }
+
 
 int generaGrigliaDiGioco(Griglia * grigliaCompleta, Griglia * grigliaDiGioco, int difficolta){
     

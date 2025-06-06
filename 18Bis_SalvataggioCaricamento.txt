@@ -1,0 +1,132 @@
+#############################################################################
+#      									    #
+#				18 Bis					    #
+#	 Alessandro De Marzo, Andrea Cillo, Flavio Abbinante		    #
+#		Gianluca Dell'Aquila, Luca Campobasso			    #
+#      									    #
+#############################################################################
+
+
+===== FUNZIONE salvaPartita(stringa nomeFile, partita partita,stringa nomeSalvataggio) =====
+
+Dati di input:
+nomeFile | nome del file binario di salvataggio utilizzato per salvare le partite | sequenza di caratteri
+partita | dato strutturato contentente le informazioni relative alla partita in corso | dato strutturato di tipo partita
+nomeSalvataggio | nome univoco del salvataggio da scrivere nel file | sequenza di caratteri
+
+
+Dati di output:
+esito | esito dell'operazione di salvataggio | booleano
+salvataggio | salvataggio con i dati relativi alla partita 
+
+
+Dati di lavoro:
+fileBin | file binario per il salvataggio delle partite | file binario
+salvataggio | contiene un solo record di tipo salvataggio, utile per confrontare e per inserire il nuovo salvataggio | dato strutturato di tipo salvataggio 
+
+
+Dati strutturati:
+partita: 
+	tentativiRimasti | numero di tentativi rimasti al giocatore | intero naturale > 0
+	difficolta | difficoltà selezionata dall'utente | intero naturale > 0
+	grigliaUtente | griglia dove l'utente inserisce i numeri | dato strutturato di tipo Griglia
+	grigliaCompleta | soluzione del sudoku | dato strutturato di tipo Griglia
+
+Griglia:
+	grigliaA | Prima griglia del triple doku | matrice di interi N x N
+	grigliaB | Seconda griglia del triple doku | N x N
+	grigliaC | Terza griglia del triple doku | N x N
+	n | numero di righe di una singola griglia | intero naturale > 0 divisibile per 3
+
+Salvataggio:
+	nome | nome del salvataggio | sequenza di caratteri
+	partita | dato strutturato contentente le informazioni relative alla partita da salvare | dato strutturato di tipo Partita
+
+
+PSEUDOCODICE di salvaPartita
+
+fileBin = apriFile(nomeFile,"a")
+esito = TRUE
+trovato = FALSE
+
+MENTRE ( FEOF(fileBin) OR trovato <> TRUE )
+	salvataggio = leggiRiga(fileBin)
+	SE ( nome di salvataggio = nomeSalvataggio )
+		trovato = TRUE
+	FINE
+FINE
+
+SE (trovato = TRUE)
+	esito = FALSE
+	FINE
+ALTRIMENTI
+	nome di salvataggio = nomeSalvataggio
+	partita di salvataggio = partita
+	scriviFile(salvataggio)
+	FINE
+
+ritorna esito
+FINE
+
+-------------------------------------------------------------------------------------------------------------------------------------------
+
+===== FUNZIONE caricaPartita(stringa nomeFile, stringa nomeCaricamento) =====
+
+Dati di input:
+nomeFile | nome del file binario di salvataggio utilizzato per salvare le partite | sequenza di caratteri
+nomeCaricamento | nome univoco del caricamento da leggere nel file | sequenza di caratteri
+
+
+Dati di output:
+esito | esito dell'operazione di caricamento | booleano
+partita | dato strutturato contentente le informazioni relative alla partita caricata | dato strutturato di tipo Partita
+
+
+Dati di lavoro:
+fileBin | file binario per il caricamento delle partite | file binario 
+
+
+Dati strutturati:
+partita: 
+	tentativiRimasti | numero di tentativi rimasti al giocatore | intero naturale > 0
+	difficolta | difficoltà selezionata dall'utente | intero naturale > 0
+	grigliaUtente | griglia dove l'utente inserisce i numeri | dato strutturato di tipo Griglia
+	grigliaCompleta | soluzione del sudoku | dato strutturato di tipo Griglia
+
+Griglia:
+	grigliaA | Prima griglia del triple doku | matrice di interi N x N
+	grigliaB | Seconda griglia del triple doku | N x N
+	grigliaC | Terza griglia del triple doku | N x N
+	n | numero di righe di una singola griglia | intero naturale > 0 divisibile per 3
+
+Caricamento:
+	nome di salvataggio | nome del salvataggio | sequenza di caratteri
+	partita di salvataggio| dato strutturato contentente le informazioni relative alla partita salvata | dato strutturato di tipo Partita
+
+
+PSEUDOCODICE di caricaPartita
+
+fileBin = apriFile(nomeFile,"a")
+esito = TRUE
+trovato = FALSE
+
+MENTRE ( FEOF(fileBin) OR trovato <> TRUE )
+	partita di salvataggio = leggiRiga(fileBin)
+	SE ( nome di salvataggio = nomeCaricamento )
+		trovato = TRUE
+	FINE
+FINE
+
+SE (trovato = TRUE)
+	nomeCaricamento = nome di salvataggio
+	partita = partita di salvataggio
+	FINE
+ALTRIMENTI
+	esito = FALSE
+	FINE
+
+ritorna esito
+
+FINE
+-------------------------------------------------------------------------------------------------------------------------------------------
+

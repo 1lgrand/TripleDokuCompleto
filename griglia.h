@@ -77,20 +77,7 @@ int inizializzaGriglia(int grigliaSingola[GRIGLIA_LEN][GRIGLIA_LEN]);
  ***********************************************************************/
 int sincronizzaQuadrante(int sorgente[GRIGLIA_LEN][GRIGLIA_LEN], int destinazione[GRIGLIA_LEN][GRIGLIA_LEN], int qOrigine, int qDestinazione);
 
-/*
- **********************************************************************
- *
- * FUNZIONE: void visualizzaGriglia(int grigliaSingola[GRIGLIA_LEN][GRIGLIA_LEN])
- *
- * DESCRIZIONE: Visualizza una singola griglia 9x9 del gioco stampandola a schermo
- *
- * PARAMETRI:
- * int grigliaSingola[GRIGLIA_LEN][GRIGLIA_LEN]: La griglia da visualizzare
- *
- * RITORNO: void
- *
- ***********************************************************************/
-void visualizzaGriglia(int grigliaSingola[GRIGLIA_LEN][GRIGLIA_LEN]);
+
 
 /*
  **********************************************************************
@@ -174,7 +161,7 @@ int generaGrigliaVincolata(int griglia[GRIGLIA_LEN][GRIGLIA_LEN], int quadrantiB
  * RITORNO: int, 1 se la generazione è riuscita per tutte e tre le griglie, 0 altrimenti
  *
  ***********************************************************************/
-int generaTripleDoku(int griglia1[GRIGLIA_LEN][GRIGLIA_LEN], int griglia2[GRIGLIA_LEN][GRIGLIA_LEN], int griglia3[GRIGLIA_LEN][GRIGLIA_LEN]);
+int generaTripleDoku(Griglia * grigliaDiGioco);
 
 //TODO: SCRIVERE COMMENTO
 int generaGrigliaDiGioco(Griglia * grigliaCompleta, Griglia * grigliaDiGioco, int difficolta);

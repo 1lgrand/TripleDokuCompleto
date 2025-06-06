@@ -88,7 +88,7 @@ int main(){
     }
     
     
-    generaTripleDoku(grigliaCompleta.grigliaA,grigliaCompleta.grigliaB,grigliaCompleta.grigliaC);
+    generaTripleDoku(&grigliaCompleta);
 
     
 
