@@ -20,9 +20,11 @@
 *
 * Lista delle modifiche effettuate:
 * [29/05/2025] - [DE MARZO] - [CREZIONE DEL FILE]
-* [02/06/2025] - [DE MARZO] - [Prototipo e implementazone calcolaModulo,checkRiga, checkColonna]
+* [02/06/2025] - [CILLO] - [Prototipo e implementazone calcolaModulo,checkRiga, checkColonna]
 * [04/06/2025] - [CILLO] - [Prototipi di funzione: checkQuadrante, checkPosizionamento] 
 * [05/06/2025] - [CILLO] - [Implementazione checkRiga, checkColonna, checkQuadrante, checkPosizionamento] 
+* [07/06/2025] - [DE MARZO] - [Implementazione copiaStringa] - [Funzione utile per inserire il nome del salvataggio inserito da tastiera, nel record corrispondente]
+* [07/06/2025] - [CAMPOBASSO] - [Implementazione confrontaStringa] - [Funzione utile per confrontare i nomi dei salvataggi]
 
 */
 
@@ -93,7 +95,7 @@ int checkPosizionamento(int griglia[GRIGLIA_LEN][GRIGLIA_LEN], int riga, int col
 }
 
 
-
+// UTILITY 
 
 /*
  **********************************************************************
@@ -111,29 +113,77 @@ int checkPosizionamento(int griglia[GRIGLIA_LEN][GRIGLIA_LEN], int riga, int col
  *
  **********************************************************************/
 int calcolaModulo(int dividendo, int divisore) {
+    // Sottrae ripetutamente il divisore dal dividendo finché
+    // il dividendo non diventa minore del divisore
     while (dividendo >= divisore) {
         dividendo = dividendo - divisore; 
     }
-    return dividendo; // Ritorno del modulo
+
+    return dividendo; // Ritorno del resto della divisione (modulo)
 }
 
 
-int confrontaStringhe(const char *stringa1, const char *stringa2){
+/*
+ **********************************************************************
+ *
+ * FUNZIONE: void copiaStringa(const char *sorgente, char *destinazione)
+ *
+ * DESCRIZIONE: Copia i caratteri dalla stringa sorgente alla stringa 
+ *              destinazione finché non viene raggiunto il terminatore '\0'.
+ *
+ * PARAMETRI:
+ * const char *sorgente:   Stringa da cui leggere (input)
+ * char *destinazione:     Stringa in cui scrivere (output)
+ *
+ * RITORNO: Nessuno. La copia viene effettuata direttamente nella destinazione.
+ *
+ **********************************************************************/
+int copiaStringa(const char *sorgente, char *destinazione) {
+    int i = 0; // Indice per scorrere i caratteri delle stringhe
+
+    // Copia ogni carattere della sorgente fino al terminatore '\0'
+    while (sorgente[i] != '\0') {
+        destinazione[i] = sorgente[i]; // Assegna il carattere corrente
+        i = i + 1; // Passa al carattere successivo
+    }
+
+    destinazione[i] = '\0'; // Aggiunge il terminatore di stringa
+}
+
+/*
+ **********************************************************************
+ *
+ * FUNZIONE: int confrontaStringhe(const char *str1, const char *str2)
+ *
+ * DESCRIZIONE: Confronta due stringhe carattere per carattere per verificare 
+ *              se sono uguali. Restituisce 1 se sono uguali, 0 altrimenti.
+ *
+ * PARAMETRI:
+ * const char *str1: Prima stringa da confrontare
+ * const char *str2: Seconda stringa da confrontare
+ *
+ * RITORNO: Intero, 1 se le stringhe sono uguali, 0 altrimenti
+ *
+ **********************************************************************/
+int confrontaStringhe(const char *str1, const char *str2){
     int i = 0;
     int esito = 0;
 
-    while(stringa1[i] != '\0' && stringa2[i] != '\0'){
-        if(stringa1[i] != stringa2[i]){
-            return esito;
+    // Confronta i caratteri delle due stringhe finché entrambe non terminano
+    while(str1[i] != '\0' && str2[i] != '\0'){
+        // Se i caratteri correnti sono diversi, le stringhe non sono uguali
+        if(str1[i] != str2[i]){
+            esito = 0;   // Imposta l'esito a 0 (non uguali) ma non esce subito
         }
         i = i + 1;
     }
 
-    if(stringa1[i] == '\0' && stringa2[i] == '\0'){
-        esito = 1;
-    }else{
-        esito = 0;
+    // Dopo il ciclo, controlla se entrambe le stringhe sono terminate
+    if(str1[i] == '\0' && str2[i] == '\0'){
+        esito = 1;   // Le stringhe sono uguali
+    } else {
+        esito = 0;   // Una stringa è più lunga dell'altra, quindi non sono uguali
     }
 
-    return esito;
+    return esito;   // Ritorno unico
 }

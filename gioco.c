@@ -16,10 +16,11 @@
 *
 * Lista delle modifiche effettuate:
 * [29/05/2025] - [DE MARZO] - [CREAZIONE DEL FILE]
-* [01/06/2025] - [DE MARZO] - [Implementazione menu di avvio]
-* [03/06/2025] - [CAMPOBASSO] - [Prototipi salvaPartita, caricaPartita]
-* [06/06/2025] - [ABBINANTE] - [Implementazione funzione visualizzaGriglia]
-* [06/06/2025] - [DELL'AQUILA] - [Implementazione funzione salvaPartita]    
+* [01/06/2025] - [DE MARZO] - [IMPLEMENTAZIONE menu di avvio]
+* [03/06/2025] - [CAMPOBASSO] - [PROTOTIPI salvaPartita, caricaPartita]
+* [06/06/2025] - [ABBINANTE] - [IMPLEMENTAZIONE funzione visualizzaGriglia]
+* [06/06/2025] - [DELL'AQUILA] - [IMPLEMENTAZIONE funzione salvaPartita]  
+* [07/06/2025] - [CAMPOBASSO] - [IMPLEMENTAZIONE caricaPartita]  
 */
 
 #include <stdio.h>
@@ -50,8 +51,6 @@ int menuAvvio(){
     return 0;
 }
     
-
-
 void visualizzaGriglia(int grigliaSingola[GRIGLIA_LEN][GRIGLIA_LEN]) {
     int i = 0;
     int j = 0;
@@ -67,9 +66,11 @@ void visualizzaGriglia(int grigliaSingola[GRIGLIA_LEN][GRIGLIA_LEN]) {
 }    
 
 
+
+// Salva il salvataggio creato nel file
 int salvaPartita(char * nomeFile, Salvataggio salvataggio){
 
-    FILE *file = fopen(nomeFile, "ab");  // append in binary
+    FILE *file = fopen(nomeFile, "ab");  
 
     fwrite(&salvataggio, sizeof(Salvataggio), 1, file);
 
@@ -77,6 +78,34 @@ int salvaPartita(char * nomeFile, Salvataggio salvataggio){
 
     return 1;
 }
+
+void inizializzaPartita(Partita *partita, int difficolta, Griglia grigliaCompleta, Griglia grigliaUtente, int tentativiRimasti) {
+    partita->difficolta = difficolta;
+    partita->grigliaCompleta = grigliaCompleta;
+    partita->grigliaUtente = grigliaUtente;
+    partita->tentativiRimasti = tentativiRimasti;
+}
+
+int caricaPartita(char *nomeFile, Salvataggio *caricamento){
+    FILE *file = fopen(nomeFile, "rb");
+    if(file == NULL){
+        return 0;
+    }
+    
+    int esito = 0;
+    Salvataggio temp;
+    
+    while(fread(&temp, sizeof(Salvataggio), 1, file) == 1 && !esito){
+        if(confrontaStringhe(temp.nome, caricamento->nome)){
+            esito = 1;
+            *caricamento = temp;  
+        }
+    }
+    
+    fclose(file);
+    return esito; 
+}
+
 
 void visualizzaSalvataggi(const char *nomeFile) {
     FILE *file = fopen(nomeFile, "rb");
@@ -98,25 +127,4 @@ void visualizzaSalvataggi(const char *nomeFile) {
     }
 
     fclose(file);
-}
-
-
-int caricaPartita(char *nomeFile, Caricamento *caricamento){
-    FILE *file = fopen(nomeFile, "rb");
-    if(file == NULL){
-        return 0;
-    }
-    
-    int esito = 0;
-    Caricamento temp;
-    
-    while(fread(&temp, sizeof(Caricamento), 1, file) == 1 && !esito){
-        if(confrontaStringhe(temp.nome, caricamento->nome)){
-            esito = 1;
-            *caricamento = temp;  
-        }
-    }
-    
-    fclose(file);
-    return esito; 
 }

@@ -38,6 +38,7 @@ int main(){
     Griglia grigliaCompleta;
     Partita partita;
     int tentativi = TENTATIVI; //Inizializzazione con il numero di tentativi validi
+    char nomeSalvataggio[MAX_SALVATAGGIO] = "";
 
     int difficolta = 0; // Inizializzazione di difficolta, 1 = FACILE, 2 = MEDIO, 3 = DIFFICILE
     int menuIniziale = 0; //Inizializza la variabile che si occupa di gestire la scelta del menu di avvio, a 0
@@ -120,10 +121,10 @@ int main(){
     printf("\nGriglia C:\n");
     visualizzaGriglia(grigliaDiGioco.grigliaC);
 
+    printf("\n\n Inserisci nome del salvataggio: ");
+    scanf("%s",&nomeSalvataggio);
 
-
-
-
+    inizializzaPartita(&partita, difficolta, grigliaCompleta, grigliaDiGioco, tentativi);
 
 
     system("pause");

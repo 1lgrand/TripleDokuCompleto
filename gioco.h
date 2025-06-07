@@ -35,12 +35,29 @@ typedef struct {
     Partita datiPartita; // dato strutturato contenente le informazioni relative alla partita
 } Salvataggio;
 
-//Struttura impiegata per caricare la partita
-typedef struct{
-    char nome[MAX_SALVATAGGIO]; // nome del salvataggio (es. array di char per sequenza di caratteri)
-    Partita datiPartita; // dato strutturato contenente le informazioni relative alla partita
-} Caricamento;
-
+/*
+ **********************************************************************
+ *
+ * FUNZIONE: void inizializzaPartita(Partita *partita, int difficolta, Griglia grigliaCompleta, Griglia grigliaUtente, int tentativiRimasti)
+ *
+ * DESCRIZIONE: Inizializza i campi della struttura Partita con i valori forniti.
+ *
+ * PARAMETRI:
+ * Partita *partita:        Puntatore alla struttura Partita da inizializzare
+ * int difficolta:          Livello di difficoltà selezionato (1 = FACILE, 2 = MEDIO, 3 = DIFFICILE)
+ * Griglia grigliaCompleta: Griglia completa (soluzione del gioco)
+ * Griglia grigliaUtente:   Griglia modificabile dall'utente
+ * int tentativiRimasti:    Numero di tentativi rimasti all'utente
+ *
+ * RITORNO: Nessuno. La struttura viene modificata attraverso il puntatore.
+ *
+ **********************************************************************/
+void inizializzaPartita(Partita *partita, int difficolta, Griglia grigliaCompleta, Griglia grigliaUtente, int tentativiRimasti) {
+    partita->difficolta = difficolta;
+    partita->grigliaCompleta = grigliaCompleta;
+    partita->grigliaUtente = grigliaUtente;
+    partita->tentativiRimasti = tentativiRimasti;
+}
 
 /*
  **********************************************************************
@@ -77,7 +94,7 @@ int salvaPartita(char * nomeFile, Salvataggio salvataggio);
  * RITORNO: esito (intero): 1 se il caricamento è avvenuto con successo, 0 altrimenti (es. salvataggio non trovato).
  *
  ***********************************************************************/
-int caricaPartita(char *nomeFile, Caricamento *caricamento);
+int caricaPartita(char *nomeFile, Salvataggio *salvataggio);
 
 
 
