@@ -19,9 +19,11 @@
 * [01/06/2025] - [DE MARZO] - [Implementazione menu di avvio]
 * [03/06/2025] - [CAMPOBASSO] - [Prototipi salvaPartita, caricaPartita]
 * [06/06/2025] - [ABBINANTE] - [Implementazione funzione visualizzaGriglia]
+* [06/06/2025] - [DELL'AQUILA] - [Implementazione funzione salvaPartita]    
 */
 
 #include <stdio.h>
+#include <string.h> // Da eliminare
 
 #include "griglia.h"
 #include "gioco.h"
@@ -64,59 +66,35 @@ void visualizzaGriglia(int grigliaSingola[GRIGLIA_LEN][GRIGLIA_LEN]) {
 }    
 
 
-int salvaPartita(char * nomeFile, Partita partita, char * nomeSalvataggio){
+int salvaPartita(char * nomeFile, Salvataggio salvataggio){
 
-    FILE * fileBin = fopen(nomeFile, "a+");
-    int esito = 1; // TRUE: salvataggio eseguito
-    int trovato = 0; // FALSE: nome di salvataggio non esistente
+    FILE *file = fopen(nomeFile, "ab");  // append in binary
 
-    if (fileBin == NULL) {
+    fwrite(&salvataggio, sizeof(Salvataggio), 1, file);
+
+    fclose(file);
+
+    return 1;
+}
+
+void visualizzaSalvataggi(const char *nomeFile) {
+    FILE *file = fopen(nomeFile, "rb");
+    if (!file) {
         perror("Errore nell'apertura del file");
-        return 0; // Errore nell'apertura del file
+        return;
     }
 
-    // Inizializza la variabile per leggere le righe del file 
-    Salvataggio salvataggio;
-    salvataggio.nome[0] = '\0'; // Inizializza la stringa
-    char * riga;
+    Salvataggio s;
 
-    // Legge il file riga per riga per verificare se il nome di salvataggio esiste già
-    while (fgets(salvataggio.nome, sizeof(salvataggio.nome), fileBin) != NULL) {
-        riga = salvataggio.nome;
-        if (/*compara le stringhe*/(riga == nomeSalvataggio) == 0) {
-            trovato = 1; // Nome di salvataggio già esistente
-            break;
-        }
+    printf("nomeSalvataggio       | tentativi | difficolta |\n");
+    printf("------------------------------------------------\n");
+
+    while (fread(&s, sizeof(Salvataggio), 1, file) == 1) {
+        printf("%-22s | %-9d | %-10d |\n",
+               s.nome,
+               s.datiPartita.tentativiRimasti,
+               s.datiPartita.difficolta);
     }
 
-    // Se il nome di salvataggio non esiste, lo aggiunge al file
-    if (trovato) {
-        esito = 0; // FALSE: già esistente
-    } else {
-        fprintf(fileBin, "%s|%d|%d|", nomeSalvataggio, partita.difficolta, partita.tentativiRimasti);
-        int i = 0; 
-        int j = 0;
-
-        // Scrive la griglia dell'utente
-        while (i < GRIGLIA_LEN) {
-            while ( j < GRIGLIA_LEN) {
-                fprintf(fileBin, "%d ", partita.grigliaUtente.grigliaA[i][j]);
-                j = j + 1;
-            }
-            i = i + 1;
-        }
-        
-        i = 0;
-        j = 0; 
-        // Scrive la griglia completa
-        while (i < GRIGLIA_LEN) {
-            while (j < GRIGLIA_LEN) {
-                fprintf(fileBin, "%d ", partita.grigliaCompleta.grigliaA[i][j]);
-                j = j + 1;
-            }
-            i = i + 1;
-        }
-    }
-    fclose(fileBin);
-    return esito; // Restituisce 1 se il salvataggio è stato eseguito, 0 se il nome di salvataggio esiste già
+    fclose(file);
 }

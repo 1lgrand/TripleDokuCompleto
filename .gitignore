@@ -11,6 +11,7 @@
 *.so
 *.a
 *.lib
+*.dat
 
 # File temporanei e di backup
 *~
@@ -25,3 +26,4 @@
 
 # File generati da make
 Makefile~
+testSalvataggio.c

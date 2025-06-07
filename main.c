@@ -42,6 +42,7 @@ int main(){
     int difficolta = 0; // Inizializzazione di difficolta, 1 = FACILE, 2 = MEDIO, 3 = DIFFICILE
     int menuIniziale = 0; //Inizializza la variabile che si occupa di gestire la scelta del menu di avvio, a 0
 
+
     // Inizializzazione di tutte le sottogriglie della griglia "soluzione"
     inizializzaGriglia(grigliaCompleta.grigliaA);
     inizializzaGriglia(grigliaCompleta.grigliaB);
@@ -90,7 +91,6 @@ int main(){
     
     generaTripleDoku(&grigliaCompleta);
 
-    
 
     //Visualizzazione delle griglie
     // TODO: Modificare e mettere in una funzione in gioco.h per la visualizzazione corretta 
@@ -119,6 +119,10 @@ int main(){
 
     printf("\nGriglia C:\n");
     visualizzaGriglia(grigliaDiGioco.grigliaC);
+
+
+
+
 
 
 

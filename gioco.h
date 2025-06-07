@@ -52,7 +52,7 @@ typedef struct {
  * RITORNO: int: 1 se il salvataggio è avvenuto con successo, 0 altrimenti (es. nome già esistente).
  *
  ***********************************************************************/
-int SalvaPartita(char *nomeFile, Partita *partita, char *nomeSalvataggio);
+int salvaPartita(char * nomeFile, Salvataggio salvataggio);
 
 
 /*
@@ -72,9 +72,9 @@ int SalvaPartita(char *nomeFile, Partita *partita, char *nomeSalvataggio);
  *
  *
  ***********************************************************************/
-int CaricaPartita(char *nomeFile, char *nomeCaricamento, Partita *partita);
+int caricaPartita(char *nomeFile, char *nomeCaricamento, Partita *partita);
 
-
+void visualizzaSalvataggi(const char *nomeFile); //ELIMINAMI
 
 
 
