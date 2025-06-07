@@ -114,4 +114,25 @@ int checkPosizionamento(int griglia[GRIGLIA_LEN][GRIGLIA_LEN], int riga, int col
  **********************************************************************/
 int calcolaModulo(int dividendo, int divisore);
 
+
+
+
+
+
+/*
+ **********************************************************************
+ *
+ * FUNZIONE: int confrontaStringhe(const char *stringa1, const char *stringa2)
+ *
+ * DESCRIZIONE: Confronta 2 strighe
+ *
+ * PARAMETRI:
+ * const char *stringa1: prima stringa
+ * const char *stringa2:  seconda stringa
+ *
+ * RITORNO: Intero, 1 se le stringhe sono uguali, altrimenti 0
+ *
+ **********************************************************************/
+int confrontaStringhe(const char *stringa1, const char *stringa2);
+
 #endif

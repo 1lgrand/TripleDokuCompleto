@@ -35,6 +35,12 @@ typedef struct {
     Partita datiPartita; // dato strutturato contenente le informazioni relative alla partita
 } Salvataggio;
 
+//Struttura impiegata per caricare la partita
+typedef struct{
+    char nome[MAX_SALVATAGGIO]; // nome del salvataggio (es. array di char per sequenza di caratteri)
+    Partita datiPartita; // dato strutturato contenente le informazioni relative alla partita
+} Caricamento;
+
 
 /*
  **********************************************************************
@@ -58,7 +64,7 @@ int salvaPartita(char * nomeFile, Salvataggio salvataggio);
 /*
  **********************************************************************
  *
- * FUNZIONE: int CaricaPartita(char *nomeFile, char *nomeCaricamento, Partita *partita)
+ * FUNZIONE: int (char *nomeFile, char *nomeCaricamento, Partita *partita)
  *
  * DESCRIZIONE: Carica i dati di una partita dal file binario di salvataggio, identificata da una stringa univoca "nomeCaricamento".
  * I dati caricati vengono copiati nella struttura "partita".
@@ -70,11 +76,9 @@ int salvaPartita(char * nomeFile, Salvataggio salvataggio);
  *
  * RITORNO: esito (intero): 1 se il caricamento è avvenuto con successo, 0 altrimenti (es. salvataggio non trovato).
  *
- *
  ***********************************************************************/
-int caricaPartita(char *nomeFile, char *nomeCaricamento, Partita *partita);
+int caricaPartita(char *nomeFile, Caricamento *caricamento);
 
-void visualizzaSalvataggi(const char *nomeFile); //ELIMINAMI
 
 
 

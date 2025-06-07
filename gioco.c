@@ -28,6 +28,7 @@
 #include "griglia.h"
 #include "gioco.h"
 
+extern int confrontaStringhe(const char *stringa1, const char *stringa2);
 
 int titolo() {
 
@@ -97,4 +98,25 @@ void visualizzaSalvataggi(const char *nomeFile) {
     }
 
     fclose(file);
+}
+
+
+int caricaPartita(char *nomeFile, Caricamento *caricamento){
+    FILE *file = fopen(nomeFile, "rb");
+    if(file == NULL){
+        return 0;
+    }
+    
+    int esito = 0;
+    Caricamento temp;
+    
+    while(fread(&temp, sizeof(Caricamento), 1, file) == 1 && !esito){
+        if(confrontaStringhe(temp.nome, caricamento->nome)){
+            esito = 1;
+            *caricamento = temp;  
+        }
+    }
+    
+    fclose(file);
+    return esito; 
 }

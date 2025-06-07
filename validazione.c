@@ -116,3 +116,24 @@ int calcolaModulo(int dividendo, int divisore) {
     }
     return dividendo; // Ritorno del modulo
 }
+
+
+int confrontaStringhe(const char *stringa1, const char *stringa2){
+    int i = 0;
+    int esito = 0;
+
+    while(stringa1[i] != '\0' && stringa2[i] != '\0'){
+        if(stringa1[i] != stringa2[i]){
+            return esito;
+        }
+        i = i + 1;
+    }
+
+    if(stringa1[i] == '\0' && stringa2[i] == '\0'){
+        esito = 1;
+    }else{
+        esito = 0;
+    }
+
+    return esito;
+}
