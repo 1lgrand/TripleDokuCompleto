@@ -52,12 +52,7 @@ typedef struct {
  * RITORNO: Nessuno. La struttura viene modificata attraverso il puntatore.
  *
  **********************************************************************/
-void inizializzaPartita(Partita *partita, int difficolta, Griglia grigliaCompleta, Griglia grigliaUtente, int tentativiRimasti) {
-    partita->difficolta = difficolta;
-    partita->grigliaCompleta = grigliaCompleta;
-    partita->grigliaUtente = grigliaUtente;
-    partita->tentativiRimasti = tentativiRimasti;
-}
+int inizializzaPartita(Partita *partita, int difficolta, Griglia grigliaCompleta, Griglia grigliaUtente, int tentativiRimasti);
 
 /*
  **********************************************************************
@@ -145,5 +140,7 @@ int menuAvvio();
  ***********************************************************************/
 void visualizzaGriglia(int grigliaSingola[GRIGLIA_LEN][GRIGLIA_LEN]);
 
+
+void visualizzaSalvataggi(const char *nomeFile);
 
 #endif

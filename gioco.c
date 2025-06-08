@@ -29,8 +29,6 @@
 #include "griglia.h"
 #include "gioco.h"
 
-extern int confrontaStringhe(const char *stringa1, const char *stringa2);
-
 int titolo() {
 
     printf("****************************************************\n");
@@ -79,13 +77,17 @@ int salvaPartita(char * nomeFile, Salvataggio salvataggio){
     return 1;
 }
 
-void inizializzaPartita(Partita *partita, int difficolta, Griglia grigliaCompleta, Griglia grigliaUtente, int tentativiRimasti) {
+int inizializzaPartita(Partita *partita, int difficolta, Griglia grigliaCompleta, Griglia grigliaUtente, int tentativiRimasti) {
+
     partita->difficolta = difficolta;
     partita->grigliaCompleta = grigliaCompleta;
     partita->grigliaUtente = grigliaUtente;
     partita->tentativiRimasti = tentativiRimasti;
+
+    return 1;
 }
 
+/*
 int caricaPartita(char *nomeFile, Salvataggio *caricamento){
     FILE *file = fopen(nomeFile, "rb");
     if(file == NULL){
@@ -96,7 +98,7 @@ int caricaPartita(char *nomeFile, Salvataggio *caricamento){
     Salvataggio temp;
     
     while(fread(&temp, sizeof(Salvataggio), 1, file) == 1 && !esito){
-        if(confrontaStringhe(temp.nome, caricamento->nome)){
+        if(confrontaStringhe(temp.nome, caricamento->nome) == 1){
             esito = 1;
             *caricamento = temp;  
         }
@@ -104,7 +106,7 @@ int caricaPartita(char *nomeFile, Salvataggio *caricamento){
     
     fclose(file);
     return esito; 
-}
+}*/
 
 
 void visualizzaSalvataggi(const char *nomeFile) {

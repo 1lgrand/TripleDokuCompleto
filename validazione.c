@@ -94,6 +94,38 @@ int checkPosizionamento(int griglia[GRIGLIA_LEN][GRIGLIA_LEN], int riga, int col
     return esito;
 }
 
+/*
+ **********************************************************************
+ *
+ * FUNZIONE: int checkNomeSalvataggio(const char *nomeSalvataggio, const char *FILENAME)
+ *
+ * DESCRIZIONE: Verifica che il nome di salvataggio fornito non sia già 
+ *              presente all'interno del file binario specificato.
+ *              Utilizza la funzione confrontaStringhe per il confronto.
+ *
+ * PARAMETRI:
+ * const char *nomeSalvataggio: Nome del salvataggio da verificare
+ * const char *FILENAME:         Nome del file binario in cui cercare
+ *
+ * RITORNO: Intero. 
+ *          1 = Il nome è valido (non esiste)
+ *          0 = Il nome esiste già o si è verificato un errore
+ *
+ **********************************************************************/
+int checkNomeSalvataggio(char *nomeSalvataggio, char *nomeFile) {
+    FILE *file = fopen(nomeFile, "rb"); // Apertura in lettura binaria
+    Salvataggio salvataggioLetto;
+    int esito = 1;
+
+    while (fread(&salvataggioLetto, sizeof(Salvataggio), 1, file) && esito != 0) {
+        if (confrontaStringhe(salvataggioLetto.nome, nomeSalvataggio)) {
+            esito = 0;
+        }
+    }
+
+    fclose(file);
+    return esito; 
+}
 
 // UTILITY 
 
@@ -138,16 +170,18 @@ int calcolaModulo(int dividendo, int divisore) {
  * RITORNO: Nessuno. La copia viene effettuata direttamente nella destinazione.
  *
  **********************************************************************/
-int copiaStringa(const char *sorgente, char *destinazione) {
-    int i = 0; // Indice per scorrere i caratteri delle stringhe
+int copiaStringa(const char *sorgente, char *destinazione){
+    int i = 0; // Indice per scorrere le stringhe
 
-    // Copia ogni carattere della sorgente fino al terminatore '\0'
-    while (sorgente[i] != '\0') {
-        destinazione[i] = sorgente[i]; // Assegna il carattere corrente
+    // Copia i caratteri dalla sorgente alla destinazione finché non si incontra il terminatore di stringa
+    while (sorgente[i] != '\0' && i < MAX_SALVATAGGIO - 1) { // Assicurati di non superare la dimensione del buffer
+        destinazione[i] = sorgente[i]; // Copia il carattere corrente
         i = i + 1; // Passa al carattere successivo
     }
 
     destinazione[i] = '\0'; // Aggiunge il terminatore di stringa
+
+    return 1;
 }
 
 /*

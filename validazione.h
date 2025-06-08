@@ -91,6 +91,25 @@ int checkQuadrante(int griglia[GRIGLIA_LEN][GRIGLIA_LEN], int rigaInizio, int co
  ***********************************************************************/
 int checkPosizionamento(int griglia[GRIGLIA_LEN][GRIGLIA_LEN], int riga, int col, int num);
 
+/*
+ **********************************************************************
+ *
+ * FUNZIONE: int checkNomeSalvataggio(const char *nomeSalvataggio, const char *FILENAME)
+ *
+ * DESCRIZIONE: Verifica che il nome di salvataggio fornito non sia già 
+ *              presente all'interno del file binario specificato.
+ *              Utilizza la funzione confrontaStringhe per il confronto.
+ *
+ * PARAMETRI:
+ * const char *nomeSalvataggio: Nome del salvataggio da verificare
+ * const char *FILENAME:         Nome del file binario in cui cercare
+ *
+ * RITORNO: Intero. 
+ *          1 = Il nome è valido (non esiste)
+ *          0 = Il nome esiste già o si è verificato un errore
+ *
+ **********************************************************************/
+int checkNomeSalvataggio(char *nomeSalvataggio, char *nomeFile);
 
 
 /*
@@ -111,6 +130,22 @@ int checkPosizionamento(int griglia[GRIGLIA_LEN][GRIGLIA_LEN], int riga, int col
 int calcolaModulo(int dividendo, int divisore);
 
 
+/*
+ **********************************************************************
+ *
+ * FUNZIONE: void copiaStringa(const char *sorgente, char *destinazione)
+ *
+ * DESCRIZIONE: Copia i caratteri dalla stringa sorgente alla stringa 
+ *              destinazione finché non viene raggiunto il terminatore '\0'.
+ *
+ * PARAMETRI:
+ * const char *sorgente:   Stringa da cui leggere (input)
+ * char *destinazione:     Stringa in cui scrivere (output)
+ *
+ * RITORNO: Nessuno. La copia viene effettuata direttamente nella destinazione.
+ *
+ **********************************************************************/
+int copiaStringa(const char *sorgente, char *destinazione);
 
 /*
  **********************************************************************

@@ -37,6 +37,7 @@ int main(){
     Griglia grigliaDiGioco;
     Griglia grigliaCompleta;
     Partita partita;
+    Salvataggio s;
     int tentativi = TENTATIVI; //Inizializzazione con il numero di tentativi validi
     char nomeSalvataggio[MAX_SALVATAGGIO] = "";
 
@@ -121,10 +122,21 @@ int main(){
     printf("\nGriglia C:\n");
     visualizzaGriglia(grigliaDiGioco.grigliaC);
 
+    //Gestione dei salvataggi
     printf("\n\n Inserisci nome del salvataggio: ");
-    scanf("%s",&nomeSalvataggio);
+    scanf("%s",&s.nome);
 
     inizializzaPartita(&partita, difficolta, grigliaCompleta, grigliaDiGioco, tentativi);
+
+    visualizzaSalvataggi(FILENAME);
+
+    if(checkNomeSalvataggio(s.nome,FILENAME) == 1){
+        s.datiPartita = partita;
+        salvaPartita(FILENAME,s);
+    }else{
+        printf("Nome salvataggio gia esistente\n\n");
+    }
+    
 
 
     system("pause");
