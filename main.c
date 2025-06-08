@@ -32,7 +32,7 @@
 
 int main(){
 
-    srand(time(NULL));
+    srand(time(0));
 
     Griglia grigliaDiGioco;
     Griglia grigliaCompleta;
@@ -57,7 +57,7 @@ int main(){
     inizializzaGriglia(grigliaDiGioco.grigliaC);
 
 
-
+/*
     //TODO: Funzione (validazione.c) che validi la scelta del menu iniziale e ritorni qualcosa per gestire il menu
     titolo(); //Stampa il titolo del gioco e il gruppo 
     menuAvvio();
@@ -72,12 +72,13 @@ int main(){
     }
 
     system("cls");
-    titolo();
+    titolo(); */
 
     /* TODO: TRASFORMARE IN FUNZIONE TUTTA LA SELEZIONE DELLA DIFFICOLTA' E RITORNARE UN INTERO COMPRESO TRA 1 E 3
-             Scrivendo una funzone in validazione che gestisca il tutto
-    */
+             Scrivendo una funzone in validazione che gestisca il tutto */
+    
     //Selezione della difficoltà
+/*
     printf("\n\n> Seleziona la difficolta del gioco: \n1. FACILE\n2. MEDIO\n3. DIFFICILE\n\n");
     scanf("%d",&difficolta);
 
@@ -92,7 +93,14 @@ int main(){
     
     
     generaTripleDoku(&grigliaCompleta);
+*/
 
+    
+    visualizzaSalvataggi(FILENAME);
+    caricaPartita(FILENAME,"capo",&partita);
+
+    grigliaCompleta = partita.grigliaCompleta;
+    grigliaDiGioco = partita.grigliaUtente;
 
     //Visualizzazione delle griglie
     // TODO: Modificare e mettere in una funzione in gioco.h per la visualizzazione corretta 
@@ -107,9 +115,9 @@ int main(){
 
     printf("\n\n");
 
-    printf("Hai selezionato la difficolta: %d\n",difficolta); 
+    //printf("Hai selezionato la difficolta: %d\n",difficolta); 
 
-    generaGrigliaDiGioco(&grigliaCompleta,&grigliaDiGioco,difficolta);
+    //generaGrigliaDiGioco(&grigliaCompleta,&grigliaDiGioco,difficolta);
 
     printf("\n\n\n\t\t ==== GRIGLIA DI GIOCO =====");
 
@@ -123,13 +131,12 @@ int main(){
     visualizzaGriglia(grigliaDiGioco.grigliaC);
 
     //Gestione dei salvataggi
-    printf("\n\n Inserisci nome del salvataggio: ");
-    scanf("%s",&s.nome);
+    //printf("\n\n Inserisci nome del salvataggio: ");
+    //scanf("%s",&s.nome);
 
-    inizializzaPartita(&partita, difficolta, grigliaCompleta, grigliaDiGioco, tentativi);
+    //inizializzaPartita(&partita, difficolta, grigliaCompleta, grigliaDiGioco, tentativi);
 
-    visualizzaSalvataggi(FILENAME);
-
+/*
     if(checkNomeSalvataggio(s.nome,FILENAME) == 1){
         s.datiPartita = partita;
         salvaPartita(FILENAME,s);
@@ -137,7 +144,7 @@ int main(){
         printf("Nome salvataggio gia esistente\n\n");
     }
     
-
+*/
 
     system("pause");
     return 0;

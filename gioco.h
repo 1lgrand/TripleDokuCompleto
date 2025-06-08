@@ -89,7 +89,7 @@ int salvaPartita(char * nomeFile, Salvataggio salvataggio);
  * RITORNO: esito (intero): 1 se il caricamento è avvenuto con successo, 0 altrimenti (es. salvataggio non trovato).
  *
  ***********************************************************************/
-int caricaPartita(char *nomeFile, Salvataggio *salvataggio);
+int caricaPartita(char *nomeFile, char * nomeSalvataggio, Partita * partitaDaCaricare);
 
 
 

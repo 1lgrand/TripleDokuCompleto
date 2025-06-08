@@ -28,6 +28,7 @@
 
 #include "griglia.h"
 #include "gioco.h"
+#include "validazione.h"
 
 int titolo() {
 
@@ -87,26 +88,27 @@ int inizializzaPartita(Partita *partita, int difficolta, Griglia grigliaCompleta
     return 1;
 }
 
-/*
-int caricaPartita(char *nomeFile, Salvataggio *caricamento){
-    FILE *file = fopen(nomeFile, "rb");
-    if(file == NULL){
-        return 0;
-    }
-    
+
+int caricaPartita(char *nomeFile, char * nomeSalvataggio, Partita * partitaDaCaricare){
+
+    FILE* fp = fopen(nomeFile,"rb");
     int esito = 0;
-    Salvataggio temp;
-    
-    while(fread(&temp, sizeof(Salvataggio), 1, file) == 1 && !esito){
-        if(confrontaStringhe(temp.nome, caricamento->nome) == 1){
+    Salvataggio s;
+
+
+    while (fread(&s,sizeof(Salvataggio),1,fp) == 1 && esito == 0)
+    {
+        if(confrontaStringhe(s.nome,nomeSalvataggio) == 1){
+            printf("Salvataggio Trovato!");
+            inizializzaPartita(partitaDaCaricare,s.datiPartita.difficolta,s.datiPartita.grigliaCompleta,s.datiPartita.grigliaUtente,s.datiPartita.tentativiRimasti);
             esito = 1;
-            *caricamento = temp;  
-        }
+        }        
     }
-    
-    fclose(file);
-    return esito; 
-}*/
+
+
+    return esito;
+
+}
 
 
 void visualizzaSalvataggi(const char *nomeFile) {
