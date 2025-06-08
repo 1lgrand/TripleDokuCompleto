@@ -20,7 +20,9 @@
 * [03/06/2025] - [CAMPOBASSO] - [PROTOTIPI salvaPartita, caricaPartita]
 * [06/06/2025] - [ABBINANTE] - [IMPLEMENTAZIONE funzione visualizzaGriglia]
 * [06/06/2025] - [DELL'AQUILA] - [IMPLEMENTAZIONE funzione salvaPartita]  
-* [07/06/2025] - [CAMPOBASSO] - [IMPLEMENTAZIONE caricaPartita]  
+* [07/06/2025] - [CAMPOBASSO] - [IMPLEMENTAZIONE caricaPartita]
+* [08/06/2025] - [DE MARZO] - [OTTIMIZZAZIONE caricaPartita] - [Viene passata per riferimento la partita per rendere piu facile il caricamento dei dati di gioco]  
+
 */
 
 #include <stdio.h>
