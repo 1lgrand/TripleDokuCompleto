@@ -20,6 +20,8 @@
 * [30/05/2025] - [DE MARZO] - [Scrittura della funzione main e test della funzione di inizializzazione]
 * [01/06/2025] - [DE MARZO] - [Test menu di avvio] 
 * [05/06/2025] - [DE MARZO, DELL'AQUILA] - [Testing generazione griglia di gioco e visualizzazione griglia con menu di avvio] 
+* [09/06/2025] - [DELL'AQUILA] - [Testing funzioni di salvataggio e caricamento] 
+
 */
 
 #include "validazione.h"

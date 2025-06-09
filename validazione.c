@@ -35,64 +35,81 @@
 
 #include <stdio.h>
 
-/* == PER CILLO: COMMENTA BENE LE ISTRUZIONI DELLE FUNZIONI */
 
 int checkRiga(int griglia[GRIGLIA_LEN][GRIGLIA_LEN], int riga, int num) {
-    int col = 0;
-    int esito = 1;
+    int col = 0; // inizializza l'indice di colonna a 0
+    int esito = 1; // assume che il numero non sia presente nella riga
+
+    // scorre la riga finché non trova il numero o raggiunge la fine
     while (col < GRIGLIA_LEN && esito == 1) {
-        if (griglia[riga][col] == num) {
-            esito = 0;
+        if (griglia[riga][col] == num) { // verifica se il numero è presente nella colonna corrente
+            esito = 0; // numero trovato, esito negativo
         }
-        col = col + 1;
+        col = col + 1; // passa alla colonna successiva
     }
-    return esito;
+
+    return esito; // restituisce 1 se il numero non è presente, 0 altrimenti
 }
+
 
 
 
 int checkColonna(int griglia[GRIGLIA_LEN][GRIGLIA_LEN], int col, int num) {
-    int riga = 0;
-    int esito = 1;
+    int riga = 0; // inizializza l'indice di riga a 0
+    int esito = 1; // assume che il numero non sia presente nella colonna
+
+    // scorre la colonna finché non trova il numero o raggiunge la fine
     while (riga < GRIGLIA_LEN && esito == 1) {
-        if (griglia[riga][col] == num) {
-            esito = 0;
+        if (griglia[riga][col] == num) { // verifica se il numero è presente nella riga corrente
+            esito = 0; // numero trovato, esito negativo
         }
-        riga = riga + 1;
+        riga = riga + 1; // passa alla riga successiva
     }
-    return esito;
+
+    return esito; // restituisce 1 se il numero non è presente, 0 altrimenti
 }
+
 
 
 
 int checkQuadrante(int griglia[GRIGLIA_LEN][GRIGLIA_LEN], int rigaInizio, int colInizio, int num) {
-    int i = rigaInizio;
-    int j = 0;
-    int esito = 1;
+    int i = rigaInizio; // inizio del quadrante (riga)
+    int j = 0; // indice per le colonne (sarà aggiornato nel ciclo interno)
+    int esito = 1; // assume che il numero non sia presente nel quadrante
+
+    // scorre le righe del quadrante 3x3
     while (i < rigaInizio + 3 && esito == 1) {
-        j = colInizio;
+        j = colInizio; // reimposta la colonna iniziale per ogni nuova riga
+
+        // scorre le colonne del quadrante 3x3
         while (j < colInizio + 3 && esito == 1) {
-            if (griglia[i][j] == num) {
-                esito = 0;
+            if (griglia[i][j] == num) { // verifica se il numero è presente nella cella corrente
+                esito = 0; // numero trovato, esito negativo
             }
-            j = j + 1;
+            j = j + 1; // passa alla colonna successiva
         }
-        i = i + 1;
+        i = i + 1; // passa alla riga successiva
     }
-    return esito;
+
+    return esito; // restituisce 1 se il numero non è presente, 0 altrimenti
 }
+
 
 
 
 int checkPosizionamento(int griglia[GRIGLIA_LEN][GRIGLIA_LEN], int riga, int col, int num) {
-    int rigaQuadrante = (riga / 3) * 3;
-    int colQuadrante = (col / 3) * 3;
-    int esito = 0;
+    int rigaQuadrante = (riga / 3) * 3; // calcola l'inizio del quadrante in base alla riga
+    int colQuadrante = (col / 3) * 3; // calcola l'inizio del quadrante in base alla colonna
+    int esito = 0; // inizializza l'esito a 0 (posizionamento non valido)
+
+    // verifica se il numero non è presente nella riga, colonna e quadrante
     if (checkRiga(griglia, riga, num) == 1 && checkColonna(griglia, col, num) == 1 && checkQuadrante(griglia, rigaQuadrante, colQuadrante, num) == 1) {
-        esito = 1;
+        esito = 1; // posizionamento valido
     }
-    return esito;
+
+    return esito; // restituisce 1 se il numero può essere inserito, 0 altrimenti
 }
+
 
 /*
  **********************************************************************
@@ -113,21 +130,23 @@ int checkPosizionamento(int griglia[GRIGLIA_LEN][GRIGLIA_LEN], int riga, int col
  *
  **********************************************************************/
 int checkNomeSalvataggio(char *nomeSalvataggio, char *nomeFile) {
-    FILE *file = fopen(nomeFile, "rb"); // Apertura in lettura binaria
-    Salvataggio salvataggioLetto;
-    int esito = 1;
+    FILE *file = fopen(nomeFile, "rb"); // apertura in lettura binaria
+    Salvataggio salvataggioLetto; // variabile per leggere ogni salvataggio dal file
+    int esito = 1; // assume che il nome non sia già presente
 
+    // legge ogni salvataggio finché non trova un nome uguale o fine file
     while (fread(&salvataggioLetto, sizeof(Salvataggio), 1, file) && esito != 0) {
-        if (confrontaStringhe(salvataggioLetto.nome, nomeSalvataggio)) {
-            esito = 0;
+        if (confrontaStringhe(salvataggioLetto.nome, nomeSalvataggio)) { // confronto nomi
+            esito = 0; // nome già presente, esito negativo
         }
     }
 
-    fclose(file);
-    return esito; 
+    fclose(file); // chiude il file
+    return esito; // restituisce 1 se il nome è disponibile, 0 se già esiste
 }
 
-// UTILITY 
+
+// ----------------------------------------UTILITY----------------------------------------- 
 
 /*
  **********************************************************************
@@ -145,8 +164,7 @@ int checkNomeSalvataggio(char *nomeSalvataggio, char *nomeFile) {
  *
  **********************************************************************/
 int calcolaModulo(int dividendo, int divisore) {
-    // Sottrae ripetutamente il divisore dal dividendo finché
-    // il dividendo non diventa minore del divisore
+    // Sottrae ripetutamente il divisore dal dividendo finché il dividendo non diventa minore del divisore
     while (dividendo >= divisore) {
         dividendo = dividendo - divisore; 
     }
